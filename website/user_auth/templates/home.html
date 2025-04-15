@@ -1,0 +1,7 @@
+{% if user.is_authenticated %}
+    <p>Вы вошли как: {{ user.email }}</p>
+    <a href="{% url 'user_auth:logout' %}">Выйти</a>
+    <a href="{% url 'profile_app:profile' %}">Профиль</a>  <!-- Переход в профиль -->
+{% else %}
+    <a href="{% url 'user_auth:login' %}">Войти</a>
+{% endif %}
