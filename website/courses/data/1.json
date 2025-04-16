@@ -1,0 +1,32 @@
+{
+  "id": "1",
+  "title": "Python Basics",
+  "description": "Курс по Python для начинающих",
+  "exp": 100,
+  "content": [
+    {
+      "type": "theory",
+      "title": "Введение",
+      "text": "Python — это язык программирования высокого уровня..."
+    },
+    {
+      "type": "test",
+      "question": "Что такое Python?",
+      "options": ["Змея", "Язык программирования", "Фреймворк"],
+      "correct": [1],
+      "test_type": "single_choice"
+    },
+    {
+      "type": "theory",
+      "title": "Переменные",
+      "text": "Переменные используются для хранения данных..."
+    },
+    {
+      "type": "test",
+      "question": "Как объявить переменную?",
+      "options": ["var x = 5", "x = 5", "int x = 5"],
+      "correct": [1],
+      "test_type": "single_choice"
+    }
+  ]
+}

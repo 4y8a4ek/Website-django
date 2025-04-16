@@ -2,6 +2,7 @@
     <p>Вы вошли как: {{ user.email }}</p>
     <a href="{% url 'user_auth:logout' %}">Выйти</a>
     <a href="{% url 'profile_app:profile' %}">Профиль</a>  <!-- Переход в профиль -->
+    <a href="{% url 'courses:course_list' %}">Курсы</a>
 {% else %}
     <a href="{% url 'user_auth:login' %}">Войти</a>
 {% endif %}

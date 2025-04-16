@@ -1,0 +1,9 @@
+<h1>Доступные курсы</h1>
+<ul>
+  {% for course in courses %}
+    <li>
+      <a href="{% url 'courses:course_detail' course.id %}">{{ course.title }}</a>
+      — {{ course.progress }}%
+    </li>
+  {% endfor %}
+</ul>
