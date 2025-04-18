@@ -2,34 +2,48 @@
 
 <h2>{{ course.title }}</h2>
 <p>{{ course.description }}</p>
-<p>Прогресс: {{ progress }}%</p>
+<p><strong>Прогресс:</strong> {{ progress }}%</p>
+
+<hr>
+
+<h3>📚 Оглавление</h3>
+<ul>
+    {% for section in sections %}
+        <li>
+            {% if section_locked|index:forloop.counter0 %}
+                🔒 {{ section.title }}
+            {% else %}
+                <strong>Секция {{ forloop.counter }}: {{ section.title }}</strong>
+                <ul>
+                    {% for block in section.content %}
+                        {% if forloop.counter0 in completed|get_item:forloop.parentloop.counter0|stringformat:"s" %}
+                            <li style="color: green;">✔ {{ block.title|default:"Вопрос" }}</li>
+                        {% elif forloop.counter0 == current_block_index and forloop.parentloop.counter0 == current_section_index %}
+                            <li><strong>➡ {{ block.title|default:"Текущий блок" }}</strong></li>
+                        {% else %}
+                            <li>{{ block.title|default:"Без названия" }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+<hr>
 
 {% if current_content.type == 'theory' %}
     <h3>{{ current_content.title }}</h3>
     <p>{{ current_content.text }}</p>
+{% endif %}
 
-{% elif current_content.type == 'test' %}
+{% if current_content.type == 'test' %}
     <h3>{{ current_content.question }}</h3>
 
     {% if completed|get_item:current_block %}
         <p style="color: green;">✅ Верный ответ!</p>
     {% elif incorrect|get_item:current_block %}
         <p style="color: red;">❌ Неправильный ответ</p>
-    {% endif %}
-
-    {% if correct_answers|get_item:current_block %}
-        <p><strong>Правильный ответ:</strong></p>
-        <ul>
-            {% for idx in correct_answers|get_item:current_block %}
-                <li>
-                    {% if current_content.options %}
-                        {{ current_content.options|index:idx }}
-                    {% else %}
-                        {{ current_content.shuffled_options|index:idx }}
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
     {% endif %}
 
     {% if not completed|get_item:current_block %}
@@ -61,6 +75,7 @@
         </form>
     {% endif %}
 {% endif %}
+
 
 <form method="post" style="margin-top: 20px;">
     {% csrf_token %}

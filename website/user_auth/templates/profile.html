@@ -1,0 +1,131 @@
+{% load static %}
+{% get_media_prefix as media_url %}
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль</title>
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const next = current === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('theme');
+            if (saved) {
+                document.documentElement.setAttribute('data-theme', saved);
+            }
+        });
+
+        // Функция для предварительного просмотра фото
+        function previewPhoto(event) {
+            const photo = document.getElementById('profile-photo');
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    photo.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Открыть окно подтверждения удаления
+        function showConfirmation() {
+            document.getElementById('confirmation-modal').style.display = 'flex';
+        }
+
+        // Закрыть окно подтверждения
+        function hideConfirmation() {
+            document.getElementById('confirmation-modal').style.display = 'none';
+        }
+
+        // Удалить профиль
+        function deleteProfile() {
+            fetch('/delete-profile/', { method: 'POST', headers: { 'X-CSRFToken': '{{ csrf_token }}' } })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = '/'; // Перенаправить на главную страницу после удаления
+                    } else {
+                        alert('Ошибка при удалении профиля');
+                    }
+                });
+        }
+    </script>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="/" class="logo-link">
+        <img src="{% static 'images/logo.png' %}" alt="Логотип" class="logo-img">
+    </a>
+    <a href="/" class="home-btn">Главная</a>
+    <a href="/courses" class="home-btn">Курсы</a>
+    <a href="/logout" class="home-btn">Выйти</a>
+    <button class="theme-btn" onclick="toggleTheme()">🌓</button>
+</div>
+
+<div class="container">
+    <div class="profile-container">
+        <h2>Профиль</h2>
+        
+        <!-- Фото профиля -->
+        <img src="{{ profile.photo.url }}" alt="Фото профиля" width="200" height="200" id="profile-photo">
+
+        <p><strong>Имя:</strong> {{ profile.user.name }}</p>
+        <p><strong>💡EXP:</strong> {{ profile.exp }}</p>
+        <p><strong>⭐Stars:</strong> {{ profile.stars }}</p>
+
+        <!-- Форма для обновления фото -->
+        <input type="file" id="photo-upload" name="photo" accept="image/*" style="display:none;" onchange="previewPhoto(event)">
+        <button class="home-btn" type="button" onclick="document.getElementById('photo-upload').click()">Обновить фото</button>
+        
+        <!-- Кнопка для удаления профиля -->
+        <button id="delete-profile-btn" class="home-btn" onclick="showConfirmation()">Удалить профиль</button>
+
+        <!-- Модальное окно для подтверждения -->
+        <div id="confirmation-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h3>Вы уверены, что хотите удалить профиль?</h3>
+                <form method="POST" action="{% url 'profile_app:delete_profile' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="confirm-btn">Да, удалить</button>
+                    <button type="button" class="cancel-btn" onclick="hideConfirmation()">Отмена</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% if course_progress_list %}
+    <div class="profile-container">
+        <h3>Прогресс по курсам</h3>
+        <div class="courses-progress">
+            {% for course in course_progress_list %}
+                <div class="course-card">
+                    <img src="{{ media_url }}course_photos/{{ course.photo }}" alt="{{ course.title }}">
+                    <h4>{{ course.title }}</h4>
+                    <div class="progress-bar">
+                        <div class="progress-bar-inner" style="width: {{ course.completed_percent }}%;"></div>
+                    </div>
+                    <p>Прогресс: {{ course.completed_percent }}%</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<footer class="footer">
+    <p>© 2025 Your Website. Все права защищены.</p>
+    <p><a href="#">Политика конфиденциальности</a> | <a href="#">Условия использования</a></p>
+</footer>
+
+</body>
+</html>

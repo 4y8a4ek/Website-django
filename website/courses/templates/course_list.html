@@ -1,9 +1,46 @@
-<h1>Доступные курсы</h1>
-<ul>
-  {% for course in courses %}
-    <li>
-      <a href="{% url 'courses:course_detail' course.id %}">{{ course.title }}</a>
-      — {{ course.progress }}%
-    </li>
-  {% endfor %}
-</ul>
+{% for course in courses %}
+    {% if course.id %}
+    <div class="course">
+        <h3>
+            <a href="{% url 'courses:course_detail' course_id=course.id %}" 
+               class="course-link"
+               onclick="checkAuth(event, {{ user.is_authenticated|yesno:'true,false' }})">
+                {{ course.title }}
+            </a>
+        </h3>
+    </div>
+    {% endif %}
+{% endfor %}
+
+<!-- Модальное окно -->
+<div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; 
+     width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000;">
+    <div style="background-color: white; padding: 20px; border-radius: 10px; 
+         max-width: 400px; margin: 100px auto; text-align: center; position: relative;">
+        <p>Для продолжения необходимо авторизоваться.</p>
+        <button onclick="redirectToLogin()" style="margin-right: 10px;">Войти</button>
+        <button onclick="closeModal()">Отмена</button>
+    </div>
+</div>
+
+<script>
+    let nextUrl = null;
+
+    function checkAuth(event, isAuthenticated) {
+        if (!isAuthenticated) {
+            event.preventDefault();
+            nextUrl = event.currentTarget.getAttribute('href');
+            document.getElementById('loginModal').style.display = 'block';
+        }
+    }
+
+    function redirectToLogin() {
+        const loginUrl = "{% url 'user_auth:login' %}?next=" + encodeURIComponent(nextUrl);
+        window.location.href = loginUrl;
+    }
+
+    function closeModal() {
+        document.getElementById('loginModal').style.display = 'none';
+        nextUrl = null;
+    }
+</script>

@@ -1,8 +1,78 @@
-{% if user.is_authenticated %}
-    <p>Вы вошли как: {{ user.email }}</p>
-    <a href="{% url 'user_auth:logout' %}">Выйти</a>
-    <a href="{% url 'profile_app:profile' %}">Профиль</a>  <!-- Переход в профиль -->
-    <a href="{% url 'courses:course_list' %}">Курсы</a>
-{% else %}
-    <a href="{% url 'user_auth:login' %}">Войти</a>
-{% endif %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+
+<!-- Навигационная панель -->
+<div class="navbar">
+    <a href="/" class="logo-link">
+        <img src="{% static 'images/logo.png' %}" alt="Логотип" class="logo-img">
+    </a>
+
+    <a href="/" class="home-btn">Главная</a>
+    <a href="{% url 'courses:course_list' %}" class="home-btn">Курсы</a>
+
+    {% if user.is_authenticated %}
+    <div class="profile-menu">
+        <a href="#" class="home-btn" onclick="toggleProfileMenu(event)">Профиль</a>
+        <div class="profile-dropdown">
+            <img src="{{ profile.photo.url }}" alt="Аватар">  <!-- обязательно проверь, что `profile.photo` доступно -->
+            <p><strong>{{ user.name }}</strong></p>
+            <p>⭐ Stars: {{ profile.stars }}</p>
+            <p>🔥 EXP: {{ profile.exp }}</p>
+            <a href="{% url 'profile_app:profile' %}" class="profile-btn">Перейти в профиль</a>
+        </div>
+    </div>
+    <a href="{% url 'user_auth:logout' %}" class="home-btn">Выйти</a>
+    {% else %}
+    <a href="{% url 'user_auth:login' %}" class="home-btn">Войти</a>
+    {% endif %}
+
+    <button class="theme-btn" onclick="toggleTheme()">🌓</button>
+</div>
+
+<!-- Основной контент -->
+<div class="main-content">
+    <h1>Добро пожаловать на обучающую платформу!</h1>
+    <p>Здесь вы найдете увлекательные курсы, задания и тесты, которые помогут вам расти и прокачивать навыки.</p>
+    <img src="{% static 'images/learning.jpg' %}" alt="Изображение обучения">
+    <p>Зарабатывайте ⭐ звезды и 🔥 опыт за прохождение тем и курсов.</p>
+</div>
+
+<!-- Футер -->
+<div class="footer">
+    <p>© 2025 Your Website. Все права защищены.</p>
+    <p><a href="#">Политика конфиденциальности</a> | <a href="#">Условия использования</a></p>
+</div>
+
+<script>
+    function toggleTheme() {
+        const html = document.documentElement;
+        const current = html.getAttribute('data-theme');
+        const next = current === 'light' ? 'dark' : 'light';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+    }
+
+    function toggleProfileMenu(event) {
+        event.preventDefault();  // чтобы ссылка не работала
+        const menu = document.querySelector('.profile-dropdown');
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const saved = localStorage.getItem('theme');
+        if (saved) {
+            document.documentElement.setAttribute('data-theme', saved);
+        }
+    });
+</script>
+
+</body>
+</html>

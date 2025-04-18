@@ -1,0 +1,234 @@
+:root {
+  /* Светлая тема по умолчанию */
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --navbar-bg: #0039c8;
+  --container-bg: #ffffff;
+  --input-bg: #f9f9f9;
+  --input-border: #ccc;
+  --button-bg: #012583;
+  --button-hover-bg: #00164e;
+  --button-text: #000000;
+  --footer-text: #555;
+  --link-color: #0039c8;
+  --button-login: #aeff00;
+  --button-log-hov: #669403;
+}
+
+[data-theme="dark"] {
+  --bg-color: #484848;
+  --text-color: #ffffff;
+  --navbar-bg: #303030;
+  --container-bg: #303030;
+  --input-bg: #404040;
+  --input-border: #666;
+  --button-bg: #181818;
+  --button-hover-bg: #101010;
+  --button-text: #bdbdbd;
+  --footer-text: #777;
+  --link-color: #3a82ff;
+  --button-login: #181818;
+  --button-log-hov: #101010;
+}
+
+/* Основные стили для страницы */
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  flex-direction: column;
+}
+
+/* Верхняя панель */
+.navbar {
+  width: 100%;
+  background-color: var(--navbar-bg);
+  color: var(--text-color);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  margin-right: 50px;
+}
+
+.logo-img {
+  height: 40px;
+  width: auto;
+}
+
+.navbar .home-btn {
+  background-color: var(--button-bg);
+  border: none;
+  padding: 10px 20px;
+  margin-right: 20px;
+  border-radius: 5px;
+  color: var(--text-color);
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.navbar .home-btn:hover {
+  background-color: var(--button-hover-bg);
+}
+
+/* Контейнер с формой */
+.container {
+  background-color: var(--container-bg);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  margin-top: 60px; /* для панели */
+}
+
+/* Заголовок */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Форма */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="name"] {
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+button {
+  padding: 10px;
+  background-color: var(--button-login);
+  border: none;
+  border-radius: 5px;
+  color: var(--button-text);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--button-log-hov);
+}
+
+/* Ошибки */
+.error {
+  color: red;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Ссылка на регистрацию */
+.registration-link {
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Секция с информацией о сайте */
+.footer {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: var(--footer-text);
+}
+
+.footer a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.navbar .theme-btn {
+  background-color: var(--button-bg);
+  margin-left: auto;
+  margin-right: 50px;
+}
+.navbar .theme-btn:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.main-content {
+    max-width: 800px;
+    padding: 20px;
+    text-align: center;
+}
+
+.main-content img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+/* Профиль-меню */
+.profile-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-dropdown {
+    display: none;  /* скрыто по умолчанию */
+    position: absolute;
+    background-color: var(--container-bg);
+    min-width: 220px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    padding: 15px;
+    border-radius: 10px;
+    top: 50px;
+    left: 0;
+    z-index: 1001;
+}
+
+.profile-dropdown p {
+    margin: 5px 0;
+}
+
+.profile-dropdown img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.profile-dropdown .profile-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: var(--button-bg);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.profile-dropdown .profile-btn:hover {
+    background-color: var(--button-hover-bg);
+}
