@@ -141,6 +141,15 @@ form {
     align-items: center;
 }
 
+/* Скрыть все формы по умолчанию */
+.form-wrapper {
+    display: none;
+}
+
+.form-wrapper.active {
+    display: block;
+}
+
 form input[type="file"] {
     margin-bottom: 15px;
     color: var(--text-color);
@@ -256,3 +265,36 @@ form button:hover {
     right: 0;
     font-size: 14px;
 }
+
+.footer a {
+    color: #ff6347;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="name"] {
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  color: var(--text-color);
+}
+/* Успешное сообщение */
+.success-message {
+    color: green;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Отдельная секция для управления аккаунтом */
+.profile-container form + form {
+    margin-top: 20px;
+}
+

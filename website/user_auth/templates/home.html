@@ -29,7 +29,6 @@
             <a href="{% url 'profile_app:profile' %}" class="profile-btn">Перейти в профиль</a>
         </div>
     </div>
-    <a href="{% url 'user_auth:logout' %}" class="home-btn">Выйти</a>
     {% else %}
     <a href="{% url 'user_auth:login' %}" class="home-btn">Войти</a>
     {% endif %}

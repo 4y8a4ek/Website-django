@@ -4,7 +4,6 @@
 <html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Профиль</title>
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
     <script>
@@ -23,49 +22,21 @@
             }
         });
 
-        // Функция для предварительного просмотра фото
-        function previewPhoto(event) {
-            const photo = document.getElementById('profile-photo');
-            const file = event.target.files[0];
-
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    photo.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
+        function showFormConfirmation(formId) {
+            const modal = document.getElementById(formId + '-modal');
+            modal.classList.add('show');
         }
 
-        // Открыть окно подтверждения удаления
-        function showConfirmation() {
-            document.getElementById('confirmation-modal').style.display = 'flex';
-        }
-
-        // Закрыть окно подтверждения
         function hideConfirmation() {
-            document.getElementById('confirmation-modal').style.display = 'none';
-        }
-
-        // Удалить профиль
-        function deleteProfile() {
-            fetch('/delete-profile/', { method: 'POST', headers: { 'X-CSRFToken': '{{ csrf_token }}' } })
-                .then(response => {
-                    if (response.ok) {
-                        window.location.href = '/'; // Перенаправить на главную страницу после удаления
-                    } else {
-                        alert('Ошибка при удалении профиля');
-                    }
-                });
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => modal.classList.remove('show'));
         }
     </script>
 </head>
 <body>
 
 <div class="navbar">
-    <a href="/" class="logo-link">
-        <img src="{% static 'images/logo.png' %}" alt="Логотип" class="logo-img">
-    </a>
+    <a href="/" class="logo-link"><img src="{% static 'images/logo.png' %}" alt="Логотип" class="logo-img"></a>
     <a href="/" class="home-btn">Главная</a>
     <a href="/courses" class="home-btn">Курсы</a>
     <a href="/logout" class="home-btn">Выйти</a>
@@ -75,39 +46,31 @@
 <div class="container">
     <div class="profile-container">
         <h2>Профиль</h2>
-        
-        <!-- Фото профиля -->
         <img src="{{ profile.photo.url }}" alt="Фото профиля" width="200" height="200" id="profile-photo">
-
         <p><strong>Имя:</strong> {{ profile.user.name }}</p>
         <p><strong>💡EXP:</strong> {{ profile.exp }}</p>
         <p><strong>⭐Stars:</strong> {{ profile.stars }}</p>
-
-        <!-- Форма для обновления фото -->
-        <input type="file" id="photo-upload" name="photo" accept="image/*" style="display:none;" onchange="previewPhoto(event)">
-        <button class="home-btn" type="button" onclick="document.getElementById('photo-upload').click()">Обновить фото</button>
-        
-        <!-- Кнопка для удаления профиля -->
-        <button id="delete-profile-btn" class="home-btn" onclick="showConfirmation()">Удалить профиль</button>
-
-        <!-- Модальное окно для подтверждения -->
-        <div id="confirmation-modal" class="modal" style="display: none;">
-            <div class="modal-content">
-                <h3>Вы уверены, что хотите удалить профиль?</h3>
-                <form method="POST" action="{% url 'profile_app:delete_profile' %}">
-                    {% csrf_token %}
-                    <button type="submit" class="confirm-btn">Да, удалить</button>
-                    <button type="button" class="cancel-btn" onclick="hideConfirmation()">Отмена</button>
-                </form>
-            </div>
-        </div>
     </div>
 
-    {% if course_progress_list %}
+    {% if completed_courses %}
+    <div class="profile-container">
+        <h3>Пройденные курсы</h3>
+        <div class="courses-progress">
+            {% for course in completed_courses %}
+                <div class="course-card">
+                    <img src="{{ media_url }}course_photos/{{ course.photo }}" alt="{{ course.title }}">
+                    <h4>{{ course.title }}</h4>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if active_courses %}
     <div class="profile-container">
         <h3>Прогресс по курсам</h3>
         <div class="courses-progress">
-            {% for course in course_progress_list %}
+            {% for course in active_courses %}
                 <div class="course-card">
                     <img src="{{ media_url }}course_photos/{{ course.photo }}" alt="{{ course.title }}">
                     <h4>{{ course.title }}</h4>
@@ -120,11 +83,88 @@
         </div>
     </div>
     {% endif %}
+
+    <div class="profile-container">
+        <h3>Управление аккаунтом</h3>
+
+        <div class="form-buttons">
+            <button class="home-btn" onclick="showFormConfirmation('photo-form')">📷 Обновить фото</button>
+            <button class="home-btn" onclick="showFormConfirmation('name-form')">✏️ Сменить имя</button>
+            <button class="home-btn" onclick="showFormConfirmation('email-form')">📧 Сменить email</button>
+            <button class="home-btn" onclick="showFormConfirmation('password-form')">🔒 Сменить пароль</button>
+            <button class="home-btn" onclick="showFormConfirmation('delete-profile-form')">🗑️ Удалить профиль</button>
+        </div>
+
+        <!-- Модальные окна для каждой формы -->
+        <div class="modal" id="photo-form-modal">
+            <div class="modal-content">
+                <h4>Обновить фото</h4>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ photo_form.photo }}
+                    <button type="submit" name="update_photo" class="home-btn">Сохранить фото</button>
+                    <button type="button" onclick="hideConfirmation()" class="cancel-btn">Отмена</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal" id="name-form-modal">
+            <div class="modal-content">
+                <h4>Сменить имя</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="name" name="name" placeholder="Новое имя" required>
+                    <button type="submit" name="change_name" class="home-btn">Сохранить</button>
+                    <button type="button" onclick="hideConfirmation()" class="cancel-btn">Отмена</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal" id="email-form-modal">
+            <div class="modal-content">
+                <h4>Сменить email</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="email" name="email" placeholder="Новый email" required>
+                    <button type="submit" name="change_email" class="home-btn">Сохранить</button>
+                    <button type="button" onclick="hideConfirmation()" class="cancel-btn">Отмена</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal" id="password-form-modal">
+            <div class="modal-content">
+                <h4>Сменить пароль</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    <label for="current_password">Текущий пароль:</label>
+                    <input type="password" id="current_password" name="current_password" required>
+                    
+                    <label for="new_password">Новый пароль:</label>
+                    <input type="password" id="new_password" name="new_password" required>
+        
+                    <button type="submit" name="change_password" class="home-btn">Сохранить</button>
+                    <button type="button" onclick="hideConfirmation()" class="cancel-btn">Отмена</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Модальное окно для удаления профиля -->
+        <div class="modal" id="delete-profile-form-modal">
+            <div class="modal-content">
+                <h4>Вы уверены, что хотите удалить профиль?</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="delete_profile" class="confirm-btn">Удалить</button>
+                    <button type="button" onclick="hideConfirmation()" class="cancel-btn">Отмена</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <footer class="footer">
     <p>© 2025 Your Website. Все права защищены.</p>
-    <p><a href="#">Политика конфиденциальности</a> | <a href="#">Условия использования</a></p>
 </footer>
 
 </body>

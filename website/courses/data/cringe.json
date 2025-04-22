@@ -1,19 +1,22 @@
 {
-    "title": "Сосал в Python",
-    "id": 2,
-    "group": "C++",
-    "photo": "2.png",
+    "title": "Cringe",
+    "id": "cringe",
+    "total-blocks": 12,
+    "photo": "1.png",
+    "group": "Python",
     "description": "Этот курс познакомит вас с базовыми понятиями языка программирования Python.",
     "sections": [
       {
         "title": "Введение",
         "content": [
           {
+            "block-id": 1,
             "type": "theory",
             "title": "Что такое Python?",
             "text": "Python — это популярный язык программирования общего назначения. Он широко используется в науке, веб-разработке, автоматизации и многих других сферах."
           },
           {
+            "block-id": 2,
             "type": "test",
             "question": "Что такое Python?",
             "options": ["Змея", "Язык программирования", "Фреймворк"],
@@ -26,16 +29,19 @@
         "title": "Переменные и типы данных",
         "content": [
           {
+            "block-id": 3,
             "type": "theory",
             "title": "Переменные в Python",
             "text": "Переменные используются для хранения данных. Пример: name = 'Alice'."
           },
           {
+            "block-id": 4,
             "type": "theory",
             "title": "Типы данных",
             "text": "Python поддерживает разные типы данных: числа, строки, списки и т.д."
           },
           {
+            "block-id": 5,
             "type": "test",
             "question": "Какие из следующих являются типами данных в Python?",
             "test_type": "multiple_choice",
@@ -53,11 +59,13 @@
         "title": "Условные операторы",
         "content": [
           {
+            "block-id": 6,
             "type": "theory",
             "title": "Оператор if",
             "text": "Оператор if позволяет выполнять код при выполнении условия: if x > 0: print('Положительное')."
           },
           {
+            "block-id": 7,
             "type": "test",
             "question": "Что выведет код: x = 10; if x > 5: print('Привет')?",
             "test_type": "single_choice",
@@ -70,6 +78,7 @@
             "correct": [2]
           },
           {
+            "block-id": 8,
             "type": "test",
             "question": "Расставьте строки кода в правильном порядке:",
             "test_type": "ordering",
@@ -81,6 +90,59 @@
             "correct": [2, 1, 0]
           }
         ]
+      },
+      {
+        "title": "Ввод текста",
+        "content": [
+          {
+            "block-id": 9,
+            "type": "test",
+            "question": "Какая функция используется для вывода текста на экран?",
+            "test_type": "text_input",
+            "correct": "print()"
+          }
+        ]
+      },
+      {
+        "title": "Заполнение пропусков",
+        "content": [
+          {
+            "block-id": 10,
+            "type": "test",
+            "question": "Заполните пропуски: x = ___(5); print(x)",
+            "test_type": "fill_in_the_blanks",
+            "correct": ["x", "=", "5"]
+          }
+        ]
+      },
+      {
+        "title": "Сопоставление",
+        "content": [
+          {
+            "block-id": 11,
+            "type": "test",
+            "question": "Соотнесите правильные функции с их описаниями.",
+            "test_type": "matching",
+            "correct": ["print()", "input()"],
+            "options": [
+              "Выводит текст на экран",
+              "Читает ввод с клавиатуры"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Открытый ответ",
+        "content": [
+          {
+            "block-id": 12,
+            "type": "test",
+            "question": "Опишите, что делает цикл for в Python.",
+            "test_type": "open_answer",
+            "correct": "Цикл for используется для итерации по элементам коллекции, например, по списку или строке."
+          }
+        ]
       }
     ]
   }
+  

@@ -8,6 +8,7 @@ from .models import CourseProgress
 from profile_app.models import UserProfile
 from copy import deepcopy
 import random
+from django.contrib import messages
 
 COURSES_DIR = os.path.join(settings.BASE_DIR, 'courses', 'data')
 
@@ -37,127 +38,167 @@ def course_detail(request, course_id):
         return HttpResponse("Курс не найден", status=404)
 
     sections = course.get('sections', [])
+    blocks_flat = [block for section in sections for block in section['content']]
+    total_blocks = len(blocks_flat)
 
     progress_obj, _ = CourseProgress.objects.get_or_create(user=request.user, course_id=course_id)
-    section_index = progress_obj.current_section
     block_index = progress_obj.current_block
 
-    current_section = sections[section_index]
-    current_block_data = current_section['content'][block_index]
-    section_completed = progress_obj.completed_blocks.get(str(section_index), [])
+    if block_index >= total_blocks:
+        block_index = total_blocks - 1
+        progress_obj.current_block = block_index
+        progress_obj.save()
 
+    current_block_data = blocks_flat[block_index]
+    block_global_id = current_block_data.get('id')
+    is_theory = current_block_data.get('type') == 'theory'
+
+    # Проверка ошибок
     incorrect = {}
+    session_incorrect = request.session.pop('incorrect', None)
+    if session_incorrect:
+        incorrect.update(session_incorrect)
 
+    # POST-обработка
     if request.method == 'POST':
-        # Проверяем нажатие кнопки для ответа
         if 'submit_answer' in request.POST:
             user_answer = request.POST.getlist('answer')
-            test_type = current_block_data['test_type']
-            correct = current_block_data['correct']
+            test_type = current_block_data.get('test_type')
+            correct = current_block_data.get('correct', [])
             is_correct = False
 
-            # Обрабатываем разные типы тестов
             if test_type in ['single_choice', 'multiple_choice']:
                 is_correct = sorted(user_answer) == sorted(map(str, correct))
             elif test_type == 'ordering':
                 try:
                     user_order = [int(x.strip()) for x in request.POST.get('answer', '').split(',')]
                     is_correct = user_order == correct
-                except:
+                except Exception:
                     is_correct = False
+            elif test_type == 'text_input':
+                is_correct = user_answer == [correct]
+            elif test_type == 'fill_in_the_blanks':
+                user_inputs = [request.POST.get(f'answer{i}', '') for i in range(len(correct))]
+                is_correct = user_inputs == correct
+            elif test_type == 'matching':
+                selected_matches = [request.POST.get(f'match_{i}') for i in range(len(correct))]
+                is_correct = selected_matches == correct
+            elif test_type == 'open_answer':
+                is_correct = True  # Всегда "верно"
 
             if is_correct:
-                # Если ответ правильный, добавляем в прогресс
-                key = str(section_index)
-                if block_index not in section_completed:
-                    section_completed.append(block_index)
-                    progress_obj.completed_blocks[key] = section_completed
-                    progress_obj.stars_earned += 10
-                    progress_obj.exp_earned += 10
-
-                    # Обновляем информацию пользователя
-                    profile, created = UserProfile.objects.get_or_create(user=request.user)
-                    profile.stars += 10
-                    profile.exp += 10
-                    profile.save()
-                    progress_obj.save()
-
-                # Автоматически переходим к следующему блоку
-                if block_index + 1 < len(current_section['content']):
-                    progress_obj.current_block += 1
-                else:
-                    progress_obj.current_section += 1
-                    progress_obj.current_block = 0
-                progress_obj.save()
-                return redirect('courses:course_detail', course_id=course_id)
-
+                # Обновляем только если блок ещё не засчитан
+                if block_index >= progress_obj.completed_blocks:
+                    progress_obj.completed_blocks += 1
+                    progress_obj.progress = (progress_obj.completed_blocks / total_blocks) * 100
+                profile, _ = UserProfile.objects.get_or_create(user=request.user)
+                profile.exp += 50  # Например, добавляем 10 exp
+                profile.stars += 10  # Например, даём 1 звезду
+                profile.save()
+                
             else:
                 incorrect[str(block_index)] = True
+                request.session['incorrect'] = incorrect
+                messages.error(request, "error")
 
-        # Обработка кнопок навигации (Назад и Вперед)
-        elif 'go_back' in request.POST:
-            if block_index > 0:
-                progress_obj.current_block -= 1
-            elif section_index > 0:
-                progress_obj.current_section -= 1
-                progress_obj.current_block = len(sections[section_index - 1]['content']) - 1
             progress_obj.save()
             return redirect('courses:course_detail', course_id=course_id)
 
-        elif 'go_forward' in request.POST:
-            if current_block_data['type'] == 'theory':
-                if block_index + 1 < len(current_section['content']):
-                    progress_obj.current_block += 1
-                else:
-                    progress_obj.current_section += 1
-                    progress_obj.current_block = 0
+        elif 'go_back' in request.POST:
+            if block_index > 0:
+                progress_obj.current_block -= 1
                 progress_obj.save()
-                return redirect('courses:course_detail', course_id=course_id)
+            return redirect('courses:course_detail', course_id=course_id)
 
-    # Вычисление общего прогресса
-    total_blocks = sum(len(section['content']) for section in sections)
-    completed_blocks = sum(len(v) for v in progress_obj.completed_blocks.values())
-    progress_obj.progress = (completed_blocks / total_blocks) * 100
-    progress_obj.save()
+        elif 'go_forward' in request.POST:
+            if block_index + 1 < total_blocks:
+                progress_obj.current_block += 1
+                progress_obj.save()
+            return redirect('courses:course_detail', course_id=course_id)
 
-    # Проверка доступа к секциям и блокам
+    # Теория автоматически считается пройденной
+    if is_theory and block_index >= progress_obj.completed_blocks:
+        progress_obj.completed_blocks += 1
+        progress_obj.progress = (progress_obj.completed_blocks / total_blocks) * 100
+        progress_obj.save()
+
+    # Определяем, какие секции заблокированы
+    completed = int(progress_obj.completed_blocks)  # Преобразуем в целое число
     section_locked = []
-    for i, section in enumerate(sections):
-        if i == 0:
-            section_locked.append(False)
-        else:
-            prev_blocks = len(sections[i - 1]['content'])
-            prev_completed = len(progress_obj.completed_blocks.get(str(i - 1), []))
-            section_locked.append(prev_completed < prev_blocks)
+    blocks_seen = 0
+    for section in sections:
+        section_block_count = len(section['content'])
+        # Преобразуем в целое число перед сравнением
+        section_locked.append(blocks_seen >= completed)
+        blocks_seen += section_block_count  # увеличиваем количество пройденных блоков
 
+    # Определение текущего блока по секции и индексу
+    cur_section_idx, cur_block_idx = 0, 0
+    remaining = block_index  # копия block_index
+
+    for i, section in enumerate(sections):
+        section_length = len(section['content'])
+        if remaining < section_length:
+            cur_section_idx = i
+            break
+    profile = None
+    if request.user.is_authenticated:
+        profile, _ = UserProfile.objects.get_or_create(user=request.user)
+        
     return render(request, 'course_detail.html', {
         'course': course,
         'sections': sections,
-        'current_section_index': section_index,
+        'current_section_index': cur_section_idx,
         'current_block_index': block_index,
         'current_content': current_block_data,
-        'can_go_back': section_index > 0 or block_index > 0,
-        'can_go_forward': not section_locked[section_index] and (
-            block_index + 1 < len(current_section['content']) or section_index + 1 < len(sections)
-        ),
+        'can_go_back': block_index > 0,
+        'can_go_forward': block_index + 1 < total_blocks,
         'section_locked': section_locked,
-        'completed': progress_obj.completed_blocks,
+        'completed': completed - 1,
         'incorrect': incorrect,
         'progress': round(progress_obj.progress, 1),
+        'profile': profile,
     })
+
+
 
 def course_list(request):
     files = os.listdir(COURSES_DIR)
-    courses = []
+    all_courses = []
+    active_courses = []
+    completed_courses = []
+
     for filename in files:
         if filename.endswith('.json'):
             data = load_course(filename[:-5])
-            progress = 0  # По умолчанию прогресс 0, если пользователь не залогинен
+            progress = 0
             if request.user.is_authenticated:
                 try:
                     progress = CourseProgress.objects.get(user=request.user, course_id=data["id"]).progress
                 except CourseProgress.DoesNotExist:
                     progress = 0
             data['progress'] = round(progress, 1)
-            courses.append(data)
-    return render(request, 'course_list.html', {'courses': courses})
+
+            all_courses.append(data)
+            if data['progress'] >= 100:
+                completed_courses.append(data)
+            if data['progress'] != 100 and data['progress'] != 0:
+                active_courses.append(data)
+        
+
+    # Группировка по полю group (только для "все курсы")
+    grouped_all = {}
+    for course in all_courses:
+        group = course.get('group', 'Без группы')
+        grouped_all.setdefault(group, []).append(course)
+
+    profile = None
+    if request.user.is_authenticated:
+        profile, _ = UserProfile.objects.get_or_create(user=request.user)
+
+    return render(request, 'course_list.html', {
+        'grouped_all': grouped_all,
+        'active_courses': active_courses,
+        'completed_courses': completed_courses,
+        'profile': profile
+    })

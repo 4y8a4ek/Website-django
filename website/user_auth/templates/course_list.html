@@ -1,0 +1,134 @@
+{% load static %}
+{% get_media_prefix as media_url %}
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курсы</title>
+    <link rel="stylesheet" href="{% static 'css/course_list.css' %}?v={{ timestamp }}">
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const next = current === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('theme');
+            if (saved) {
+                document.documentElement.setAttribute('data-theme', saved);
+            }
+        });
+
+        let nextUrl = null;
+
+        function toggleProfileMenu(event) {
+            event.preventDefault();  // чтобы ссылка не работала
+            const menu = document.querySelector('.profile-dropdown');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+        
+        function checkAuth(event, isAuthenticated) {
+            if (!isAuthenticated) {
+                event.preventDefault();
+                nextUrl = event.currentTarget.getAttribute('href');
+                document.getElementById('loginModal').style.display = 'block';
+            }
+        }
+
+        function redirectToLogin() {
+            const loginUrl = "{% url 'user_auth:login' %}?next=" + encodeURIComponent(nextUrl);
+            window.location.href = loginUrl;
+        }
+
+        function closeModal() {
+            document.getElementById('loginModal').style.display = 'none';
+            nextUrl = null;
+        }
+    </script>
+</head>
+<body>
+    <!-- Навбар -->
+    <div class="navbar">
+        <a href="/" class="logo-link">
+            <img src="{% static 'images/logo.png' %}" alt="Логотип" class="logo-img">
+        </a>
+        <a href="/" class="home-btn">Главная</a>
+        <a href="/courses" class="home-btn">Курсы</a>
+        {% if user.is_authenticated %}
+    <div class="profile-menu">
+        <a href="#" class="home-btn" onclick="toggleProfileMenu(event)">Профиль</a>
+        <div class="profile-dropdown">
+            <img src="{{ profile.photo.url }}" alt="Аватар">  <!-- обязательно проверь, что `profile.photo` доступно -->
+            <p><strong>{{ user.name }}</strong></p>
+            <p>⭐ Stars: {{ profile.stars }}</p>
+            <p>🔥 EXP: {{ profile.exp }}</p>
+            <a href="{% url 'profile_app:profile' %}" class="profile-btn">Перейти в профиль</a>
+        </div>
+    </div>
+    {%endif%}
+        <button class="theme-btn" onclick="toggleTheme()">🌓</button>
+    </div>
+
+    <!-- Контейнер курсов -->
+    <div class="container">
+        <h2>Активные курсы</h2>
+        {% if active_courses %}
+            <div class="course-list">
+                {% for course in active_courses %}
+                    {% include "partials/course_card.html" with course=course %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class = "non"> Нет активных курсов.</p>
+        {% endif %}
+    
+        <hr>
+        <h2>Все курсы</h2>
+        {% for group, group_courses in grouped_all.items %}
+            <div class="group">
+                <h3 class="group-title">{{ group }}</h3>
+                <div class="course-list">
+                    {% for course in group_courses %}
+                        {% include "partials/course_card.html" with course=course %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    
+        <hr>
+    
+    
+        <h2>Завершённые курсы</h2>
+        {% if completed_courses %}
+            <div class="course-list">
+                {% for course in completed_courses %}
+                    {% include "partials/course_card.html" with course=course %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class = "non">Нет завершённых курсов.</p>
+        {% endif %}
+    </div>
+
+    <!-- Модальное окно -->
+    <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; 
+         width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000;">
+        <div style="background-color: white; padding: 20px; border-radius: 10px; 
+             max-width: 400px; margin: 100px auto; text-align: center; position: relative;">
+            <p>Для продолжения необходимо авторизоваться.</p>
+            <button onclick="redirectToLogin()" style="margin-right: 10px;">Войти</button>
+            <button onclick="closeModal()">Отмена</button>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <p>© 2025 Cr8ate. Все права защищены.</p>
+        <p><a href="#">Политика конфиденциальности</a> | <a href="#">Условия использования</a></p>
+    </footer>
+</body>
+</html>

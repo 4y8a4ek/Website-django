@@ -1,0 +1,249 @@
+{% load static custom_filters %}
+{% get_media_prefix as media_url %}
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ course.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/course_detail.css' %}">
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const next = current === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('theme');
+            if (saved) {
+                document.documentElement.setAttribute('data-theme', saved);
+            }
+        });
+
+        function toggleProfileMenu(event) {
+            event.preventDefault();
+            const menu = document.querySelector('.profile-dropdown');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('feedback-modal').classList.remove('show');
+        }
+    </script>
+</head>
+<body>
+
+<!-- Навбар -->
+<div class="navbar">
+    <a href="/" class="logo-link">
+        <img src="{% static 'images/logo.png' %}" alt="Логотип" class="logo-img">
+    </a>
+    <a href="/" class="home-btn">Главная</a>
+    <a href="/courses" class="home-btn">Курсы</a>
+    {% if user.is_authenticated %}
+    <div class="profile-menu">
+        <a href="#" class="home-btn" onclick="toggleProfileMenu(event)">Профиль</a>
+        <div class="profile-dropdown">
+            <img src="{{ profile.photo.url }}" alt="Аватар">
+            <p><strong>{{ user.name }}</strong></p>
+            <p>⭐ Stars: {{ profile.stars }}</p>
+            <p>🔥 EXP: {{ profile.exp }}</p>
+            <a href="{% url 'profile_app:profile' %}" class="profile-btn">Перейти в профиль</a>
+        </div>
+    </div>
+    {% endif %}
+    <button class="theme-btn" onclick="toggleTheme()">🌓</button>
+</div>
+
+<div class="container">
+    <h2>{{ course.title }}</h2>
+    <p>{{ course.description }}</p>
+
+    <div class="progress-bar-wrapper">
+        <div class="progress-bar">
+            <div class="progress-fill" style="width: {{ progress }}%"></div>
+        </div>
+        <div class="progress-text">{{ progress }}%</div>
+    </div>
+
+    <div class="course-grid">
+        <!-- Оглавление -->
+        <div class="course-toc">
+            <h3>📚 Оглавление</h3>
+            {% for section in sections %}
+                <div class="section-title">
+                    {% if section_locked|index:forloop.counter0 %}
+                        🔒 Секция {{ forloop.counter }}: {{ section.title }}
+                    {% else %}
+                        ✅ Секция {{ forloop.counter }}: {{ section.title }}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="course-content">
+            <div class="content-inner">
+                {% if current_content.type == 'theory' %}
+                    <h3 class = "title">{{ current_content.title }}</h3>
+                    <p>{{ current_content.text|safe }}</p>
+                {% elif current_content.type == 'test' %}
+                    {% if completed >= current_block_index %}
+                        <h3 class = "title">{{ current_content.question }}</h3> 
+                <div class="correct-answer">
+                    <div class="ans-blc">
+                        <p class="corr">Правильный ответ:</p>
+                        <ul >
+                            {% if current_content.test_type == 'ordering' %}
+                                {% for i in current_content.correct %}
+                                    <li>{{ current_content.shuffled_options|index:i }}</li>
+                                {% endfor %}
+                            {% elif current_content.test_type == 'text_input' %}
+                                <li>{{ current_content.correct }}</li>
+                            {% else %}
+                                {% for i in current_content.correct %}
+                                    <li>{{ current_content.options|index:i }}</li>
+                                {% endfor %}
+                            {% endif %}
+                        </ul>
+                    </div>
+                        <img id="sad-rabbit-img" class="sad-rabbit-image" src="" alt="Sad Rabbit" />
+                        <script>
+                            const images = [
+                                "{{ media_url }}happy_rabbit/3.png"
+                            ];
+                            const randomImage = images[Math.floor(Math.random() * images.length)];
+                            const imgElement = document.getElementById("sad-rabbit-img");
+                            imgElement.src = randomImage;
+                            imgElement.onload = function() {
+                                imgElement.style.maxWidth = "200px";
+                                imgElement.style.maxHeight = "200px";
+                                imgElement.style.marginTop = "10px";
+                            }
+                        </script>
+                    </div>
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit" name="go_forward" class="nav-btn">Далее →</button>
+                        </form>
+                    {% else %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <h3 class = "title">{{ current_content.question }}</h3>
+                            <div class="answer-block">
+                                {% if current_content.test_type == 'single_choice' %}
+                                    {% for opt in current_content.options %}
+                                        <label class="answer-option">
+                                            <input type="radio" name="answer" value="{{ forloop.counter0 }}"> {{ opt }}
+                                        </label>
+                                    {% endfor %}
+                                {% elif current_content.test_type == 'multiple_choice' %}
+                                    {% for opt in current_content.options %}
+                                        <label class="answer-option">
+                                            <input type="checkbox" name="answer" value="{{ forloop.counter0 }}"> {{ opt }}
+                                        </label>
+                                    {% endfor %}
+                                {% elif current_content.test_type == 'ordering' %}
+                                    <p>Введите индексы в правильном порядке (например: 2,0,1)</p>
+                                    <ul>
+                                        {% for opt in current_content.shuffled_options %}
+                                            <li>{{ forloop.counter0 }}: {{ opt }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    <input type="text" name="answer" class="answer-input">
+                                {% elif current_content.test_type == 'text_input' %}
+                                    <p>{{ current_content.text|safe }}</p>
+                                    <input type="text" name="answer" class="answer-input">
+                                {% elif current_content.test_type == 'matching' %}
+                                    <div class="matching-grid">
+                                        <div class="matching-column">
+                                            <h4>Левая часть</h4>
+                                            {% for left in current_content.left %}
+                                                <p>{{ forloop.counter }}. {{ left }}</p>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="matching-column">
+                                            <h4>Выберите соответствие</h4>
+                                            {% for left in current_content.left %}
+                                                <select name="match_{{ forloop.counter0 }}" class="answer-input">
+                                                    <option value="">-- Выберите --</option>
+                                                    {% for opt in current_content.right %}
+                                                        <option value="{{ opt }}">{{ opt }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <button type="submit" name="submit_answer" class="submit-button">Ответить</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+        
+                {% if messages %}
+                    <div class="messages-container">
+                        {% for message in messages %}
+                            {% if message.tags == 'error' %}
+                                <div class="error-message">
+                                    <p class = "incor">Ответ неправильный, повтори попытку</p>
+                                    <img id="sad-rabbit-img" class="sad-rabbit-image" src="" alt="Sad Rabbit" />
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <script>
+                        const images = [
+                            "{{ media_url }}sad_rabbit/23.png"
+                        ];
+                        const randomImage = images[Math.floor(Math.random() * images.length)];
+                        const imgElement = document.getElementById("sad-rabbit-img");
+                        imgElement.src = randomImage;
+                        imgElement.onload = function() {
+                            imgElement.style.maxWidth = "200px";
+                            imgElement.style.maxHeight = "200px";
+                            imgElement.style.marginTop = "10px";
+                        }
+                    </script>
+                {% endif %}
+            </div>
+        
+            <!-- Кнопки навигации -->
+            <div class="nav-buttons">
+                <form method="post">
+                    {% csrf_token %}
+                    {% if can_go_back %}
+                        <button type="submit" name="go_back" class="nav-btn">← Назад</button>
+                    {% endif %}
+                    {% if can_go_forward %}
+                        <button type="submit" name="go_forward" class="nav-btn">Вперёд →</button>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        {% if messages %}
+            const modal = document.getElementById("feedback-modal");
+            const msg = document.getElementById("modal-message");
+            msg.textContent = "{{ messages.0|escapejs }}";
+            msg.className = "message-{{ messages.0.tags }}";
+            modal.classList.add("show");
+        {% endif %}
+    });
+</script>
+
+<!-- Футер -->
+<footer class="footer">
+    <p>© 2025 Your Website. Все права защищены.</p>
+    <p><a href="#">Политика конфиденциальности</a> | <a href="#">Условия использования</a></p>
+</footer>
+
+</body>
+</html>

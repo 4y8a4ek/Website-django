@@ -8,13 +8,27 @@ from profile_app.models import UserProfile  # Импорт модели проф
 # Страница регистрации
 def register(request):
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            return redirect('user_auth:login')
-    else:
-        form = RegistrationForm()
-    return render(request, 'register.html', {'form': form})
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        password = request.POST.get('password1')
+
+        if CustomUser.objects.filter(email=email).exists():
+            return render(request, 'register.html', {'error': 'Email уже зарегистрирован'})
+
+        user = CustomUser.objects.create_user(email=email, password=password, name=name)
+        UserProfile.objects.create(user=user)
+
+        # Используем authenticate — он сам определит backend
+        user = authenticate(request, email=email, password=password)
+
+        if user is not None:
+            login(request, user)  # Теперь backend установлен правильно
+            return redirect('user_auth:home')
+        else:
+            return render(request, 'register.html', {'error': 'Ошибка входа после регистрации'})
+
+    return render(request, 'register.html')
+
 
 def login_view(request):
     next_url = request.GET.get('next') or request.POST.get('next') or 'user_auth:home'
