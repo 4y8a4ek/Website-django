@@ -152,7 +152,7 @@ def course_detail(request, course_id):
         'can_go_back': block_index > 0,
         'can_go_forward': block_index + 1 < total_blocks,
         'section_locked': section_locked,
-        'completed': completed - 1,
+        'completed': completed,
         'incorrect': incorrect,
         'progress': round(progress_obj.progress, 1),
         'profile': profile,
