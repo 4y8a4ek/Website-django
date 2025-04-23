@@ -84,7 +84,9 @@ body {
 .navbar .home-btn:hover {
   background-color: var(--button-hover-bg);
 }
-
+.home-btn{
+  color: white;
+}
 /* Контейнер с формой */
 .container {
   background-color: var(--container-bg);
