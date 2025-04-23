@@ -594,7 +594,7 @@ select {
 
   .title{
     font-size: 25px;
-    color: white;
+    color: var(--text-color);
     font-weight: bold;
     unicode-bidi: isolate;
   }

@@ -18,8 +18,6 @@ def load_course(course_id):
             course_data = json.load(f)
             if 'id' not in course_data:
                 raise KeyError(f"Курс {course_id} не содержит ключ 'id'")
-            
-            # Перемешиваем варианты ответов для заданий типа 'ordering'
             for test in course_data.get('content', []):
                 if test['type'] == 'test' and test.get('test_type') == 'ordering':
                     original = test['options']
