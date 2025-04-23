@@ -82,7 +82,7 @@ def profile_view(request):
         # Обработка удаления профиля
         if 'delete_profile' in request.POST:
             request.user.delete()
-            return redirect('home')  # или куда нужно
+            return redirect('user_auth:home')  # или куда нужно
 
     # Получаем все прогрессы пользователя
     course_progress_list = []
