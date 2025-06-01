@@ -1,9 +1,12 @@
 {% load static %}
 {% get_media_prefix as media_url %}
+{% now "U" as timestamp %}
+
 <!DOCTYPE html>
 <html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
+    
     <title>Профиль</title>
     <link rel="stylesheet" href="{% static 'css/profile.css' %}?v={{ timestamp }}">
     <script>
@@ -113,7 +116,7 @@
                 <h4>Сменить имя</h4>
                 <form method="post">
                     {% csrf_token %}
-                    <input type="name" name="name" placeholder="Новое имя" required>
+                    <input type="name" name="new_name" placeholder="Новое имя" required>
                     <button type="submit" name="change_name" class="home-btn">Сохранить</button>
                     <button type="button" onclick="hideConfirmation()" class="cancel-btn">Отмена</button>
                 </form>
@@ -125,7 +128,7 @@
                 <h4>Сменить email</h4>
                 <form method="post">
                     {% csrf_token %}
-                    <input type="email" name="email" placeholder="Новый email" required>
+                    <input type="email" name="new_email" placeholder="Новый email" required>
                     <button type="submit" name="change_email" class="home-btn">Сохранить</button>
                     <button type="button" onclick="hideConfirmation()" class="cancel-btn">Отмена</button>
                 </form>

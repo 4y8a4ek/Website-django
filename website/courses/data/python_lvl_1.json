@@ -1,0 +1,622 @@
+{
+  "title": "Python(easy)",
+  "id": "python_lvl_1",
+  "total-blocks": 73,
+  "photo": "easpyt.png",
+  "group": "Python",
+  "sections": [
+    {
+      "title": "Интерпритатор и среда",
+      "content": [
+        {
+          "block-id": 1,
+          "type": "theory",
+          "image": "course_photos/python_easy/1.jpg"
+        },
+        {
+          "block-id": 2,
+          "type": "theory",
+          "image": "course_photos/python_easy/2.jpg"
+        },
+        {
+          "block-id": 3,
+          "type": "theory",
+          "image": "course_photos/python_easy/3.jpg"
+        },
+        {
+          "block-id": 4,
+          "type": "theory",
+          "image": "course_photos/python_easy/4.jpg"
+        },
+        {
+          "block-id": 5,
+          "type": "theory",
+          "image": "course_photos/python_easy/5.jpg"
+        },
+        {
+          "block-id": 6,
+          "type": "theory",
+          "image": "course_photos/python_easy/6.jpg"
+        },
+        {
+          "block-id": 7,
+          "type": "theory",
+          "image": "course_photos/python_easy/7.jpg"
+        },
+        {
+          "block-id": 8,
+          "type": "theory",
+          "image": "course_photos/python_easy/8.jpg"
+        },
+        {
+          "block-id": 9,
+          "type": "theory",
+          "image": "course_photos/python_easy/9.jpg"
+        },
+        {
+          "block-id": 10,
+          "type": "theory",
+          "image": "course_photos/python_easy/10.jpg"
+        },
+        {
+          "block-id": 11,
+          "type": "theory",
+          "image": "course_photos/python_easy/11.jpg"
+        },
+        {
+          "block-id": 12,
+          "type": "theory",
+          "image": "course_photos/python_easy/12.jpg"
+        },
+        {
+          "block-id": 13,
+          "type": "theory",
+          "image": "course_photos/python_easy/13.jpg"
+        },
+        {
+          "block-id": 14,
+          "type": "theory",
+          "image": "course_photos/python_easy/14.jpg"
+        },
+        {
+          "block-id": 15,
+          "type": "theory",
+          "image": "course_photos/python_easy/15.jpg"
+        },
+        {
+          "block-id": 16,
+          "type": "theory",
+          "image": "course_photos/python_easy/16.jpg"
+        }
+      ]
+    },
+    {
+      "title": "Операторы ввода и вывода, переменные",
+      "content": [
+        {
+          "block-id": 17,
+          "title": "Вывод данных. Оператор print()",
+          "type": "theory",
+          "text": "Чтобы что-то вывести на экран в программе, мы используем команду print(). Это как сказать компьютеру: «Покажи вот это!» <br> В круглых скобках после print указываем, что именно хотим показать. Если это текст, его нужно писать в кавычках — одинарных (' ') или двойных (\" \"). Главное — в начале и в конце должны быть одинаковые кавычки. <br> Пример: <br> 'code' print(\"Привет, мир!\") 'code' <br> или <br> 'code' print('Привет, мир!') 'code' <br> Всё, что мы указываем в скобках у print(), называется аргументами. Это как список вещей, которые программа должна вывести.<br> Можно передать несколько аргументов, разделяя их запятыми. Тогда print() покажет их подряд, вставляя между ними пробелы. <br> Пример: <br>'code' print('Я', 'учусь', 'программировать', 'на', 'Python!') 'code' <br> Результат будет такой: <br> 'code' Я учусь программировать на Python! 'code' <br> Заметили? print() сам поставил пробелы между словами. Он делает это по умолчанию. Так что print() — это удобный способ сообщить пользователю нужную информацию."
+        },
+        {
+          "block-id": 18,
+          "title": "Ввод данных. Оператор input()",
+          "type": "theory",
+          "text": "До этого мы только выводили текст на экран, но теперь пора научиться получать информацию от пользователя. Представьте, что программа — это собеседник. С помощью команды input() она может задавать вопросы и ждать ответа.<br> Пример:<br> 'code' print('Как тебя зовут?') \n print('Привет,', input()) 'code' <br> Вот что здесь происходит шаг за шагом: <br> 1.Сначала на экране появится надпись: Как тебя зовут?<br> 2.Затем программа остановится и будет ждать, пока пользователь напечатает ответ и нажмёт Enter.<br> 3.Введённый текст заменит собой input(), и программа продолжит работу, выводя, например: <br> 'code' Привет, Артём  \n #(если пользователь ввёл \"Артём\") 'code' <br> Команда input() всегда пишется с круглыми скобками. Когда программа доходит до неё, она как будто делает паузу и внимательно слушает пользователя.<br> То, что введёт человек, можно сохранить в переменную — это как ячейка памяти с ярлыком. Так программа сможет использовать эти данные позже:<br> 'code' name = input('Как тебя зовут?') \n print('Приятно познакомиться,', name) 'code'<br> Теперь программа сама сначала спрашивает имя, потом отвечает, используя то, что ей сказали. Это делает программы живыми и интерактивными."
+        },
+        {
+          "block-id": 19,
+          "title": "Переменные",
+          "type": "theory",
+          "text": "Когда мы используем input(), программа ждёт, пока пользователь что-то напечатает. Но просто ждать и забывать — не очень полезно. Нам нужно как-то сохранить введённую информацию, чтобы потом с ней работать. Для этого придуманы переменные. <br> Переменная — это как ящик с подписью. В ящик кладём информацию (например, имя), и в любой момент можем открыть его и посмотреть, что там. <br> Пример: <br> 'code' user_name = input() \n print('Вы ввели текст:', user_name) 'code' <br> Здесь user_name — это имя переменной. Мы кладём туда то, что ввёл пользователь. А потом, когда вызываем print(user_name), программа заглядывает в этот \"ящик\" и выводит его содержимое."
+        },
+        {
+          "block-id": 20,
+          "title": "Как использовать переменные в print()",
+          "type": "theory",
+          "text": "Внутри print() можно писать не только текст, но и переменные. Только переменные нужно писать без кавычек: <br> 'code' city = 'Тула' \n print(city, '- мой город!') 'code' <br> Результат:<br> 'code' Тула - мой город! 'code' <br> Можно использовать и несколько переменных: <br> 'code' name = 'Алеша' \n city = 'Тула' \n print('Меня зовут', name, '.', city, '- мой город!') 'code' <br> Результат: <br> 'code' Меня зовут Алеша . Тула - мой город! 'code' "
+        },
+        {
+          "block-id": 21,
+          "title": "Правила для имён переменных",
+          "type": "theory",
+          "text": "   •  Имя может состоять из латинских букв (a–z, A–Z), цифр и подчёркиваний (_). <br>    •  Имя не может начинаться с цифры. <br> • В имени не должно быть пробелов. <br> • Имя должно описывать, что хранится в переменной. <br> • Python различает большие и маленькие буквы. name и Name — это разные переменные. <br> Обычно используют стиль написания маленькими буквами с подчёркиваниями между словами: <br> 'code' user_name \n server_response \n is_password_good 'code' "
+        },
+        {
+          "block-id": 22,
+          "title": "Что такое значение переменной",
+          "type": "theory",
+          "text": "Значение — это то, что хранится внутри переменной. Например, в <br> 'code' user_name = 'Оля' 'code' <br> значением будет 'Оля'. <br> Знак = в программировании — это не \"равно\", а «положи это значение в переменную». Программа сначала смотрит, что справа от =, а потом кладёт это в переменную слева. <br> 'code' color = 'синий' 'code' <br> Теперь color будет хранить слово \"синий\". <br> Можно менять значение переменной в любой момент: <br> 'code' color = 'синий' \n color = 'зелёный' 'code' <br> Теперь в переменной color уже лежит \"зелёный\" — предыдущее значение просто заменилось. <br> Запомни: сколько раз в программе написано input(), столько раз программа будет ждать ввода с клавиатуры. Каждый раз — отдельный ввод, заканчивающийся нажатием Enter."
+        },
+        {
+          "block-id": 23,
+          "type": "test",
+          "question": "Оператор print() используется для:",
+          "test_type": "single_choice",
+          "options": [
+            "вывода данных на экран",
+            "считывания данных с клавиатуры"
+          ],
+          "correct": [0]
+        },
+        {
+          "block-id": 24,
+          "type": "test",
+          "question": "Как называются значения для вывода, указываемые через запятую в команде print() ?",
+          "test_type": "multiple_choice",
+          "options": ["строками", "аргументами", "символами", "параметрами"],
+          "correct": [1, 3]
+        },
+        {
+          "block-id": 25,
+          "type": "test",
+          "question": "Что покажет приведенный ниже код? <br> 'code' print(\"I'm\", 'Just', 'Ken', \"!\") 'code'",
+          "test_type": "single_choice",
+          "options": [
+            "I'mJustKen!",
+            "Im Just Ken !",
+            "ImJustKen!",
+            "I'm Just Ken !",
+            "произойдет ошибка"
+          ],
+          "correct": [3]
+        },
+        {
+          "block-id": 26,
+          "type": "test",
+          "question": "Что покажет приведенный ниже код? <br> 'code' print('Hello, it's me!') 'code'",
+          "test_type": "single_choice",
+          "options": [
+            "Hello, it's me!",
+            "'Hello, it's me!'",
+            "Hello, it",
+            "произойдет ошибка"
+          ],
+          "correct": [3]
+        },
+        {
+          "block-id": 27,
+          "type": "test",
+          "question": "Что покажет приведенный ниже код? <br> 'code' print(Перт, -, столица, штата, Западная, Австралия) 'code' ",
+          "test_type": "single_choice",
+          "options": [
+            "Перт - столица штата Западная Австралия",
+            "Перт-столицаштатаЗападнаяАвстралия",
+            "Перт, -, столица, штата, Западная, Австралия",
+            "произойдет ошибка"
+          ],
+          "correct": [3]
+        },
+        {
+          "block-id": 28,
+          "type": "test",
+          "question": "Оператор input() используется для:",
+          "test_type": "single_choice",
+          "options": [
+            "вывода данных на экран",
+            "считывания данных с клавиатуры"
+          ],
+          "correct": [1]
+        },
+        {
+          "block-id": 29,
+          "type": "test",
+          "question": "Что покажет приведенный ниже код? <br> 'code' a = input() \n b = input() \n c = input() \n \n print(a, b, c) 'code' <br> если на вход программе будут поданы строки: <br> 'code' 'Perm' \n 'Moscow' \n 'Chelyabinsk' 'code'",
+          "test_type": "single_choice",
+          "options": [
+            "Perm \n Moscow \n Chelyabinsk",
+            "input() input() input()",
+            "a b c",
+            "PermMoscowChelyabinsk",
+            "Perm Moscow Chelyabinsk",
+            "abc",
+            "произойдет ошибка"
+          ],
+          "correct": [4]
+        },
+        {
+          "block-id": 30,
+          "type": "test",
+          "question": "Что покажет приведенный ниже код? <br> 'code' a = \"Don't worry\" \n b = 'Be happy' \n \n print('a') \n print('b') 'code' ",
+          "test_type": "single_choice",
+          "options": [
+            "Don't worry \n Be happy",
+            "'a' \n 'b' ",
+            "Don't worry Be happy",
+            "a \n b",
+            "произойдет ошибкa"
+          ],
+          "correct": [3]
+        },
+        {
+          "block-id": 31,
+          "type": "test",
+          "question": "Что покажет приведенный ниже код? <br> 'code' a = '10' \n b = '20' \n c = '30'  \n \n print(a b c) 'code' ",
+          "test_type": "single_choice",
+          "options": [
+            "a b c",
+            "abc",
+            "102030",
+            "10 20 30",
+            "произойдет ошибкa"
+          ],
+          "correct": [4]
+        },
+        {
+          "block-id": 32,
+          "type": "test",
+          "question": "Какие из имён <i> допустимы </i> для названия перменных в Python? <br> <br> <i> Примечание. </i> Вариантов ответа может быть несколько.",
+          "test_type": "multiple_choice",
+          "options": [
+            "teacher_2",
+            "teacher 2",
+            "2teacher",
+            "teacher2",
+            "teacher",
+            "2 teacher"
+          ],
+          "correct": [0, 3, 4]
+        }
+      ]
+    },
+    {
+      "title": "Параметры sep и end",
+      "content": [
+        {
+          "block-id": 33,
+          "title": "Параметр sep",
+          "type": "theory",
+          "text": "<b>SEP</b> отвечает за то, что ставится между выводимыми элементами: <br> 'code' print('aa', 'bb', 'cc') 'code' <br> Результат: <br> 'code' aa bb cc 'code' <br> А теперь зададим другой разделитель: <br> 'code' print('aa', 'bb', 'cc', sep='*') 'code' <br> Результат: <br> 'code' aa*bb*cc 'code' <br> Можно даже использовать переменную: <br> 'code'  divider = '-' \n print('aa', 'bb', 'cc', sep=divider) 'code'  <br> Результат: <br> 'code' aa-bb-cc 'code'"
+        },
+        {
+          "block-id": 34,
+          "title": "Параметр end",
+          "type": "theory",
+          "text": "<b>END</b> определяет, что будет в конце строки после вывода: <br> 'code' print(\"Привет\") \n print(\"Мир\") 'code' <br> Результат: <br> 'code' Привет \n Мир 'code' <br> Но если задать end, поведение меняется: <br> 'code' print(\"Привет\", end=' :) ') \n print(\"Мир\") 'code' <br> Результат: <br> 'code' Привет :) Мир 'code'  <br> Можно и переменные использовать: <br> 'code' ending = '***' \n print('a', 'b', 'c', end=ending) \n print('следующая строка') 'code'  <br> Результат: <br> 'code' a b c***следующая строка 'code' "
+        },
+        {
+          "block-id": 35,
+          "title": "Полезные примечания",
+          "type": "theory",
+          "text": "1.Просто print() без аргументов — это перевод строки: <br>'code' print('Python') \n print() \n print('Java') 'code' <br>Выведет: <br>'code' Python \n \n Java 'code' <br>2. Символ \\n означает перевод строки: <br>'code' print('a', '\\ n', 'b', '\\ n', 'c', sep='*', end='#') 'code' <br>Выведет: <br>'code' a*\n *b* \n *c# 'code' <br>3.Можно использовать оба параметра сразу: <br>'code' print('a', 'b', 'c', sep='*', end=' конец') 'code' <br>Результат: <br>'code' a*b*c конец 'code' <br>4. Разные print() могут использовать разные настройки: <br>'code' print('Hello', 'world', sep='>>>', end='! ') \n print('2024') 'code' <br>Выведет: <br>'code' Hello>>>world! 2024 'code' <br>5. Чтобы убрать все лишние символы: <br>'code' print('a', 'b', 'c', sep='', end='') \n print('d', 'e', 'f', sep='', end='') 'code' <br>Результат: <br>'code' abcdef 'code' <br>6. Несколько переводов строки: <br>'code' print('Python', end='\\ n\\ n\\ n') 'code' <br>7. Сначала указываем все данные, а потом параметры sep и end. Так нельзя: <br>'code' # Ошибка \n print('5', '+', sep='_', '5') 'code' <br>8. Если передан только один аргумент, sep не влияет: <br>'code' print('Python', sep='+++')  # просто выведет Python 'code' "
+        },
+        {
+          "block-id": 36,
+          "title": "Множественное присваивание",
+          "type": "theory",
+          "text": "В Python можно за одну строку присвоить значения нескольким переменным: <br> 'code' name, surname = 'Timur', 'Guev' \n print('Имя:', name, 'Фамилия:', surname) 'code' <br> Этот код аналогичен следующему, но короче: <br> 'code' name = 'Timur' \n surname = 'Guev' 'code' <br> Множественное присваивание удобно, если нужно сразу инициализировать несколько переменных. Главное — чтобы количество переменных слева от знака = совпадало с количеством значений справа."
+        },
+        {
+          "block-id": 37,
+          "title": "Множественное присваивание с input()",
+          "type": "theory",
+          "text": "Можно также считывать данные с клавиатуры: <br> 'code' name, surname = input(), input() \n print('Имя:', name, 'Фамилия:', surname) 'code' <br> Программа поочерёдно запросит два ввода и присвоит их переменным name и surname."
+        },
+        {
+          "block-id": 38,
+          "title": "Обмен значений переменных",
+          "type": "theory",
+          "text": "Множественное присваивание часто применяют для обмена значениями переменных без дополнительной переменной: <br>'code' name1 = 'Timur' \n name2 = 'Gvido' \n \n name1, name2 = name2, name1 'code' <br> После выполнения этого кода значения переменных поменяются местами. <br> Важно понимать, почему нельзя просто написать: <br> 'code' name1 = name2 \n name2 = name1 'code' <br> Этот код не работает правильно, потому что после первой строки name1 уже содержит то же значение, что и name2. Второй строкой мы просто повторяем его в обе переменные, теряя оригинальное значение name1."
+        },
+        {
+          "block-id": 39,
+          "title": "Полезные замечания",
+          "type": "theory",
+          "text": "1. Название переменной само по себе ничего не означает — оно не влияет на содержимое. Чтобы в переменной было правильное значение, его нужно явно присвоить. <br> 2. Новое значение переменной полностью заменяет старое. <br> 3. Нельзя использовать зарезервированные слова как имена переменных. Вот список таких слов в Python: <br> 'code' False, True, None, and, with, as, assert, break, class, \n continue, def, del, elif, else, except, finally, \n try, for, from, global, if, import, in, is, \n lambda, nonlocal, not, or, pass, raise, \n return, while, yield 'code' <br> Попытка использовать одно из этих слов в качестве имени переменной вызовет ошибку."
+        },
+        {
+          "block-id": 40,
+          "title": "Стиль кода согласно PEP 8",
+          "type": "theory",
+          "text": "PEP 8 — это официальный гайд по оформлению Python-кода. Соблюдение стиля делает код единообразным и понятным. <br><b>Рекомендация 1. </b> Не ставь пробел перед открывающей скобкой функции: <br> 'code' # Правильно: \n print('Hello')\n \n # Неправильно: \n print ('Hello') 'code' <br><b>Рекомендация 2.</b> После запятой должен быть пробел: <br> 'code' # Правильно: \n  print('A', 'B') \n \n # Неправильно: \n print('A','B') 'code'  <br> <b>Рекомендация 3.</b> Не ставь пробел вокруг = в именованных аргументах: <br>'code' # Правильно: \n print('A', 'B', sep='-', end='!') \n \n # Неправильно: \n print('A', 'B', sep = '-', end = '!') 'code' "
+        },
+        {
+          "block-id": 41,
+          "title": "Комментарии в коде",
+          "type": "theory",
+          "text": "<b>Однострочный комментарий: </b> <br> 'code' # Это пример комментария \n print('Hello!') 'code'  <br> <b> Комментарий в конце строки: </b> <br> 'code' print('Hello!')  # Печать слова Hello 'code' <br> По стандарту PEP 8: <br> \t   1. Комментарий должен быть отделён от кода двумя пробелами <br> \t 2. Комментарий начинается с \"# \" (с пробелом после решётки) <br> <b> Неправильно: </b> <br> 'code' #Это комментарий \n print('Hi')#Без пробела 'code' <br><b>Правильно:</b> <br>'code' # Это комментарий \n print('Hi')  # С пробелом 'code' "
+        },
+        {
+          "block-id": 42,
+          "type": "test",
+          "question": "Что покажет приведенный ниже код? <br> 'code' print('31', sep='+') 'code' ",
+          "test_type": "single_choice",
+          "options": [
+            "+3+1+",
+            "+31+",
+            "3+1",
+            "+31",
+            "3+1+",
+            "+3+1",
+            "31+",
+            "31",
+            "произойдет ошибкa"
+          ],
+          "correct": [7]
+        },
+        {
+          "block-id": 43,
+          "type": "test",
+          "question": "Что покажет приведенный ниже код? <br> 'code' print('31', sep='+') 'code' ",
+          "test_type": "single_choice",
+          "options": [
+            "+3+1+",
+            "+31+",
+            "3+1",
+            "+31",
+            "3+1+",
+            "+3+1",
+            "31+",
+            "31",
+            "произойдет ошибкa"
+          ],
+          "correct": [7]
+        },
+        {
+          "block-id": 44,
+          "type": "test",
+          "question": "Что покажет приведенный ниже код? <br> 'code' print('31', end='-') 'code' ",
+          "test_type": "single_choice",
+          "options": [
+            "-3-1-",
+            "-31-",
+            "3-1",
+            "-31",
+            "3-1-",
+            "-3-1",
+            "31-",
+            "31",
+            "произойдет ошибкa"
+          ],
+          "correct": [6]
+        },
+        {
+          "block-id": 45,
+          "type": "test",
+          "question": "Что покажет приведенный ниже код? <br> 'code' delimiter = '+' \n print('a','b', sep=delimiter) 'code' ",
+          "test_type": "single_choice",
+          "options": [
+            "a + b",
+            "+a+b+",
+            "a+b+",
+            "a b+",
+            "a+b",
+            "+ab+",
+            "произойдет ошибкa"
+          ],
+          "correct": [4]
+        },
+        {
+          "block-id": 46,
+          "type": "test",
+          "question": "Сколько строк будет распечатано в результате выполнения следующего кода? <br> 'code' print('a', 'b', 'c', sep='*') \n print('d', 'e', 'f', sep='**', end='') \n print('g', 'h', 'i', sep='+', end='%') \n print('j', 'k', 'l', sep='-', end='\\ n') \n print('m', 'n', 'o', sep='/', end='!') \n print('p', 'q', 'r', sep='1', end='%') \n print('s', 't', 'u', sep='&', end='\\ n') \n print('v', 'w', 'x', sep='%') \n print('y', 'z', sep='/', end='!') \n 'code' <br> <b> Примечание. </b> Последовательность символов \\ n задаёт перевод строки.",
+          "test_type": "text_input",
+          "correct": "5"
+        },
+        {
+          "block-id": 47,
+          "type": "test",
+          "question": "Сколько строк будет распечатано в результате выполнения следующего кода? <br> 'code' language = 'Python' \n language = 'Pascal' \n print(language) 'code' ",
+          "test_type": "text_input",
+          "correct": "Pascal"
+        },
+        {
+          "block-id": 48,
+          "type": "test",
+          "question": "Выбери строки кода, соответсвующие стандарту PEP-8. <br> <i> Примечание 1. </i> Правильных ответов может быть несколько <br> <i> Примечание 2. </i> Будьте внимательны с пробелами!",
+          "test_type": "multiple_choice",
+          "options": [
+            "print('Follow PEP8!')",
+            "print ('Follow PEP8!')",
+            "print('Follow', 'PEP8!') ",
+            "print('Follow','PEP8!')",
+            "print('Follow','PEP8', sep = '**')",
+            "print('Follow', 'PEP8', sep='**')",
+            "name = input()",
+            "name=input()"
+          ],
+          "correct": [0, 2, 5, 6]
+        },
+        {
+          "block-id": 49,
+          "type": "test",
+          "question": "Что покажет приведённый ниже код? <br>  'code' # print('Java') \n # print('Ruby') \n # print('Scala') \n print('Python', end='+') \n # print('C++') \n # print('GO') \n print('C#', end='=') \n # print('C') \n print('awesome')\n # finish 'code' ",
+          "test_type": "text_input",
+          "correct": "Python+C#=awesome"
+        }
+      ]
+    },
+    {
+      "title": "Целочисленная арифметика",
+      "content": [
+        {
+          "block-id": 50,
+          "title": "Целочисленная арифметика",
+          "type": "theory",
+          "text": "<b>Целые числа в Python </b> <br> Переменная без кавычек создаётся как число: <br> 'code' num1 = 7 \n num2 = 10 \n num3 = num1 + num2 \n print(num3)  # 17 'code' <br> Запомни: <b> числа пишутся без кавычек </b>, строки с кавычками. <br> <br> <b>Арифметика</b> <br> 'code' a = 3 \n b = 2 \n print(a + b)  # 5 \n print(a - b)  # 1 \n print(a * b)  # 6 \n print(a / b)  # 1.5 'code' <br> <br> <b> Порядок выполнения операций </b> <br> 'code' num1 = 2 + 3 * 4 \n num2 = (2 + 3) * 4 \n print(num1)  # 14 \n print(num2)  # 20 'code' <br> <b> Преобразование типов <br> Строка → целое: </b> <br> 'code' s = '1992' \n year = int(s) 'code' <br> <b> Целое → строка: </b> <br> 'code' num = 17 \n s = str(num) 'code' <br> <b> Сумма введённых чисел: </b> <br> 'code' num1 = int(input()) \n num2 = int(input())\n print(num1 + num2) 'code' <br> <b> Примечания: </b> <br> • int = integer (англ. \"целое число\") <br> • В Python нет ограничений на размер целого числа <br> • Минус может быть унарным: <br> 'code' num1 = -6 \n num2 = 17 – 7 'code' "
+        },
+        {
+          "block-id": 51,
+          "title": "Дополнительные арифметические операции",
+          "type": "theory",
+          "text": "<b>1. Возведение в степень (**) </b> <br> 'code' print(2 ** 0)   # 1 \n print(2 ** 3)   # 8 \n print(2 ** -1)  # 0.5 \n print((-3) ** 3)  # -27 'code' <br> • Оператор ** работает справа налево: 2 ** 2 ** 3 = 2 ** (2 ** 3) = 256 <br><br><b>2. Целочисленное деление (//)</b> <br> 'code' print(10 // 3)   # 3 \n print(-10 // 3)  # -4 (округление вниз) 'code' <br> • Делит нацело, отбрасывая дробную часть, результат всегда округляется в меньшую сторону <br><br> <b>3. Остаток от деления (%)</b> <br> 'code' print(10 % 3)   # 1 \n print(5 % 9)    # 5 'code' <br> • Полезен для проверки кратности: if x % 2 == 0: — число чётное<br><br><b>Получение цифр числа</b> <br><b>Пример: двухзначное число</b> <br> 'code' num = 17 \n print(num % 10)     # последняя цифра: 7 \n print(num // 10)    # первая цифра: 1 'code' <br> <b>Пример: трёхзначное число </b> <br> 'code' num = 754 \n print(num % 10)            # 4 (последняя) \n print((num % 100) // 10)   # 5 (средняя) \n print(num // 100)          # 7 (первая)  'code' <br><b>Запомни:</b> <br>• Последняя цифра: <br>'code' num % 10 'code'<br>• Удаление последней: <br> 'code' num // 10 'code' <br><br><b>Примечание:</b> операции % и // используются для обработки отдельных цифр в числе — полезно при разборе числа по цифрам (например, для задач на палиндромы, делимость, цифровые корни)."
+        },
+        {
+          "block-id": 52,
+          "type": "test",
+          "question": "Что покажет приведенный ниже код? <br> 'code' s = 0 \n k = 30 \n d = k - 5 \n k = 2 * d \n s = k - 100 \n \n print(s) 'code' ",
+          "test_type": "text_input",
+          "correct": "-50"
+        },
+        {
+          "block-id": 53,
+          "type": "test",
+          "question": "Что покажет приведенный ниже код? <br> 'code' x = 3 \n y = 4 \n z = x + y \n z = z + 1 \n x = y \n y = 5 \n x = z + y + 7 \n \n print(x) 'code' ",
+          "test_type": "text_input",
+          "correct": "20"
+        },
+        {
+          "block-id": 54,
+          "type": "test",
+          "question": "Что покажет приведенный ниже код? <br> 'code' a = 4 \n print(a, 'a') 'code' ",
+          "test_type": "single_choice",
+          "options": ["4 4", "a a", "4 a", "a 4", "произойдет ошибкa"],
+          "correct": [2]
+        },
+        {
+          "block-id": 55,
+          "type": "test",
+          "question": "Что покажет приведенный ниже код? <br> 'code' print(2 * 3**2 - 1) 'code' ",
+          "test_type": "single_choice",
+          "options": ["35", "6", "17", "16", "11", "произойдет ошибкa"],
+          "correct": [2]
+        },
+        {
+          "block-id": 56,
+          "type": "test",
+          "question": "Что покажет приведенный ниже код? <br> 'code' print(-10**2) \n print(-10**3) 'code' ",
+          "test_type": "single_choice",
+          "options": [
+            "-100 \n 1000",
+            "100 \n 1000",
+            "100 \n -1000",
+            "-100 \n -1000",
+            "произойдет ошибкa"
+          ],
+          "correct": [3]
+        },
+        {
+          "block-id": 57,
+          "type": "test",
+          "question": "Что покажет приведенный ниже код? <br> 'code' print(3**1**2) 'code' ",
+          "test_type": "single_choice",
+          "options": ["6", "8", "9", "3", "произойдет ошибкa"],
+          "correct": [3]
+        },
+        {
+          "block-id": 58,
+          "type": "test",
+          "question": "Что покажет приведенный ниже код? <br> 'code' a = 15 // (16 % 7) \n b = 34 % a * 5 - 29 % 5 * 2 \n print(a + b) 'code' ",
+          "test_type": "text_input",
+          "correct": "29"
+        }
+      ]
+    },
+    {
+      "title": "Условный оператор if-else",
+      "content": [
+        {
+          "block-id": 59,
+          "title": "Условный оператор if-else",
+          "type": "theory",
+          "text": "Теперь, когда ты умеешь вводить и обрабатывать данные, пора научиться управлять логикой программы. Для этого используется конструкция if, которая проверяет условие и выполняет определённый блок кода, если оно истинно (True). <br> 'code' answer = input('Какой язык программирования мы изучаем?') \n if answer == 'Python': \n \t print('Верно! Мы ботаем Python =)') \n \t print('Python - отличный язык!') 'code' <br><br> Если условие не выполняется, блок кода пропускается. Чтобы задать альтернативное действие, используется else: <br> 'code' answer = input('Какой язык программирования мы изучаем?') \n \n if answer == 'Python': \n \t print('Верно! Мы ботаем Python =)') \n \t print('Python - отличный язык!') \n else: \n \t print('Не совсем так!') 'code' "
+        },
+        {
+          "block-id": 60,
+          "title": "Отступы в Python",
+          "type": "theory",
+          "text": "Отступы важны! В Python блоки кода формируются при помощи <b>четырёх пробелов (Таба) </b>. После строки с if или else: все строки, которые относятся к этому блоку, должны иметь одинаковый отступ. <br> 'code' x = 10 \n if x > 5: \n \t print('x больше 5')  # часть блока \n print('Это вне блока')   # не часть блока 'code' "
+        },
+        {
+          "block-id": 61,
+          "title": "Операторы сравнения",
+          "type": "theory",
+          "text": "Для сравнения значений в Python используются следующие операторы: <br><b>Выражения и их описание </b> <br> 'code' x > 7 #больше \n x < 7 #меньше \n x >= 7 #больше или равно \n x <= 7 #меньше или равно \n x == 7 #равно \n x != 7 #не равно 'code' <br> Пример: <br> 'code' num1 = int(input()) \n num2 = int(input()) \n \n if num1 < num2: \n \t print(num1, 'меньше чем', num2) \n if num1 > num2: \n \t print(num1, 'больше чем', num2) \n if num1 == num2: \n \t print(num1, 'равно', num2) \n if num1 != num2: \n \t print(num1, 'не равно', num2) 'code'"
+        },
+        {
+          "block-id": 62,
+          "title": "Цепочки сравнений",
+          "type": "theory",
+          "text": "Python позволяет писать компактные сравнения: <br> 'code' age = int(input()) \n if 3 <= age <= 6: \n \t print('Вы ребёнок') 'code' <br> Проверка равенства трёх переменных: <br> 'code' if a == b == c: \n \t print('числа равны') \n else: \n \t print('числа не равны') 'code' <br> ⚠️ Но a != b != c не гарантирует, что все числа различны! Это <b>не транзитивно.</b> <br><br>   <b>Вывод </b> <br> if-else — это фундамент ветвления в Python. Он позволяет программе выполнять разные действия в зависимости от данных пользователя. Всегда следи за отступами и не путай = (присваивание) и == (сравнение)!"
+        }
+      ]
+    },
+    {
+      "title": "Логические операторы в Python",
+      "content": [
+        {
+          "block-id": 63,
+          "title": "Оператор and",
+          "type": "theory",
+          "text": "Оператор and означает логическое \"И\": условие считается истинным, только если все части выражения истинны. <br>'code' age = int(input('Сколько вам лет?: ')) \n grade = int(input('В каком классе вы учитесь?: ')) \n if age >= 12 and grade >= 7: \n \t print('Доступ разрешен.') \n else: \n \t print('Доступ запрещен.') 'code' <br> Можно объединять больше условий: <br> 'code' if age >= 12 and grade >= 7 and city == 'Москва': \n \t print('Доступ разрешен.') 'code' <br> 'code' #Таблица истинности для and: \n a       b    a and b \n False  False  False \n False   True  False \n True   False  False \n True    True   True 'code' "
+        },
+        {
+          "block-id": 64,
+          "title": "Оператор or",
+          "type": "theory",
+          "text": "Оператор or означает логическое \"ИЛИ\": условие считается истинным, если хотя бы одно из условий истинно. <br> 'code' city = input('Город: ') \n if city == 'Москва' or city == 'Санкт-Петербург' or city == 'Екатеринбург': \n \t print('Доступ разрешен.') \n else: \n \t print('Доступ запрещен.') 'code'           <br> 'code' #Таблица истинности для or: \n a        b    a or b \n False  False  False \n False   True   True \n True   False   True \n True    True   True 'code' "
+        },
+        {
+          "block-id": 65,
+          "title": "Оператор not",
+          "type": "theory",
+          "text": "not инвертирует логическое значение: <br> 'code' age = int(input('Сколько вам лет?: ')) \n if not (age < 12): \n \t print('Доступ разрешен.') \n else: \n \t print('Доступ запрещен.') 'code' "
+        },
+        {
+          "block-id": 66,
+          "title": "Приоритет логических операторов",
+          "type": "theory",
+          "text": "Приоритет выполнения:<br> 1. not <br> 2. and <br> 3. or <br> Для явного порядка используйте скобки: <br> 'code' if age >= 12 and grade >= 7 and (city == 'Москва' or city == 'Санкт-Петербург'): \n \t print('Доступ разрешен.') 'code' "
+        },
+        {
+          "block-id": 67,
+          "title": "Типичные ошибки",
+          "type": "theory",
+          "text": "<b>Ошибка 1:</b> путаница and и or: <br> 'code' if x > 1 or x < 100:  # всегда True! 'code' <br> Правильно: <br> 'code' if x > 1 and x < 100: 'code' <br><br><b>Ошибка 2:</b> пропуск переменной: <br> 'code' if age >= 7 and <= 9:  # Ошибка! 'code' <br> Правильно: <br> 'code' if age >= 7 and age <= 9: \n # или так: \n if 7 <= age <= 9: 'code' <br> <b>Ошибка 3:</b> избыточные вычисления: <br> 'code' 5 > 100 and 10 > 0  # второе не проверяется \n 10 > 0 or 5 > 100   # второе не проверяется 'code' <br><br><b>Вывод</b><br>Логические операторы делают условия гибкими и мощными. Используй and, or, not осознанно, не забывай про приоритет операций и скобки. Всегда пиши читаемые и точные условия!"
+        }
+      ]
+    },
+    {
+      "title": "Логические операторы в Python",
+      "content": [
+        {
+          "block-id": 68,
+          "title": "Вложенный и каскадный условный оператор",
+          "type": "theory",
+          "text": "<b>Вложенный условный оператор</b><br>Внутри условного оператора можно использовать любые инструкции, в том числе другие if-else. Это называется <b>вложенным ветвлением.</b> С каждым уровнем вложенности отступ увеличивается на 4 пробела: <br> 'code' if условие1: \n \t #блок кода \n else: \n \t if условие2: \n \t \t #блок кода \n else: \n \t if условие3: \n \t \t #блок кода 'code' <br><br><b>Пример:</b> определение координатной четверти точки: <br> 'code' x = int(input()) \n y = int(input()) \n \n if x > 0: \n \t if y > 0: \n \t \t print('Первая четверть') \n \t else: \n \t \t print('Четвертая четверть') \n else: \n \t if y > 0: \n \t \t print('Вторая четверть') \n \t else: \n \t \t print('Третья четверть') 'code' <br>Такой подход работает, но при глубоком вложении теряется читаемость. <br><br><b>Пример:</b> перевод из 100-балльной системы в 5-балльную: <br> 'code' grade = int(input('Введите вашу отметку по 100-балльной системе: '))\n\n if grade >= 90: \n \t print(5) \n else: \n \t if grade >= 80: \n \t \t print(4) \n \t else: \n \t \t if grade >= 70: \n \t \t \t print(3) \n \t \t else: \n \t \t \t if grade >= 60: \n \t \t \t \t print(2) \n \t \t \t else: \n \t \t \t \t print(1) 'code' <br>Код работает, но становится трудно читаемым из-за вложенности."
+        },
+        {
+          "block-id": 69,
+          "title": "Каскадный условный оператор: if-elif-else",
+          "type": "theory",
+          "text": "Для выбора между несколькими вариантами без излишней вложенности используют <b>каскадный оператор.</b><br><br><b>Пример:</b> <br> 'code' traffic_light_signal = input('Введите сигнал светофора: ') \n \n if traffic_light_signal == 'красный': \n \t print('Стой!') \n elif traffic_light_signal == 'желтый': \n \t print('Приготовься...') \n else traffic_light_signal == 'зеленый': \n \t print('Иди!') 'code' <br>Если введён некорректный сигнал, программа ничего не напечатает. Блок else в конструкции if-elif-else не обязателен."
+        },
+        {
+          "block-id": 70,
+          "title": "Вывод",
+          "type": "theory",
+          "text": "Используй вложенные if там, где необходимо учитывать несколько уровней условий. Но если нужно выбрать одну из нескольких альтернатив — лучше использовать if-elif-else. Это делает код компактным и читаемым."
+        }
+      ]
+    },
+    {
+      "title": "Тестирование по логике в Python",
+      "content": [
+        {
+          "block-id": 71,
+          "type": "test",
+          "question": "Работа каких фрагментов кода правильно определяет, чётное или нет число содержится в переменной i? <br> Вариант 1. <br> 'code' if i / 2: \n \t print(i, 'чётное') \n else: \n \t print(i, 'нечётное') 'code'          <br> Вариант 2. <br> 'code' if i // 2: \n \t print(i, 'чётное') \n else: \n \t print(i, 'нечётное') 'code'          <br> Вариант 3. <br> 'code' if i % 2 == 0: \n \t print(i, 'чётное') \n else: \n \t print(i, 'нечётное') 'code'          <br> Вариант 4. <br> 'code' if i // 2 == 0: \n \t print(i, 'чётное') \n else: \n \t print(i, 'нечётное') 'code'          <br> Вариант 5. <br> 'code' if i % 2 != 0: \n \t print(i, 'чётное') \n else: \n \t print(i, 'нечётное') 'code'          <br> Вариант 6. <br> 'code' if i // 2 != 0: \n \t print(i, 'чётное') \n else: \n \t print(i, 'нечётное') 'code'",
+          "test_type": "multiple_choice",
+          "options": ["1", "2", "3", "4", "5", "6"],
+          "correct": [2, 4]
+        },
+        {
+          "block-id": 72,
+          "type": "test",
+          "question": "Что покажет приведенный ниже код? <br> 'code' num1 = 34 \n num2 = 81 \n if num1 // 9 == 0 or num2 % 9 == 0: \n \t print('число', num1, 'выиграло') \n else: \n \t  print('число', num2, 'выиграло') 'code' ",
+          "test_type": "single_choice",
+          "options": ["число num1 выиграло", "число 81 выиграло", "число num2 выиграло", "число 34 выиграло"],
+          "correct": [3]
+        },
+        {
+          "block-id": 73,
+          "type": "test",
+          "question": "Что покажет приведенный ниже код? <br> 'code' a = int(input()) \n \n if a >= 2 and a <= 17: \n \t b = 3 \n \t p = a * a + b * b \n else: \n \t b = 5 \n \n p = (a + b) * (a + b) \n print(p) 'code' <br> если на вход программе будет подано следующее число: <br> 'code' 7 \t 'code' ",
+          "test_type": "text_input",
+          "correct": "100"
+        }
+      ]
+    }
+  ]
+}

@@ -11,6 +11,23 @@ import random
 from django.contrib import messages
 
 COURSES_DIR = os.path.join(settings.BASE_DIR, 'courses', 'data')
+import re
+
+
+def highlight_code_blocks(text):
+    # Ищем 'code' с пробелами и содержимое до следующего 'code' с пробелами
+    pattern = r"'code'\s*( .*?) \s*'code'"
+    
+    def repl(m):
+        code_text = m.group(1)
+        # Заменим литералы \n на переносы, если надо
+        code_text = code_text.replace('\\n', '\n')
+        return f'<pre><code class="language-python">{code_text}</code></pre>'
+    
+    return re.sub(pattern, repl, text, flags=re.DOTALL)
+
+
+
 
 def load_course(course_id):
     try:
@@ -56,7 +73,8 @@ def course_detail(request, course_id):
     session_incorrect = request.session.pop('incorrect', None)
     if session_incorrect:
         incorrect.update(session_incorrect)
-
+    if 'question' in current_block_data:
+        current_block_data['question'] = highlight_code_blocks(current_block_data['question'])
     # POST-обработка
     if request.method == 'POST':
         if 'submit_answer' in request.POST:
@@ -100,18 +118,35 @@ def course_detail(request, course_id):
                 messages.error(request, "error")
 
             progress_obj.save()
+            if 'question' in current_block_data:
+                current_block_data['question'] = highlight_code_blocks(current_block_data['question'])
             return redirect('courses:course_detail', course_id=course_id)
+        
+        elif 'jump_to_section' in request.POST:
+                section_idx = int(request.POST['jump_to_section'])
+                target_section = sections[section_idx]
+                # Перейти к первому блоку секции
+                target_block_index = sum(len(s['content']) for s in sections[:section_idx])
+                progress_obj.current_block = target_block_index
+                progress_obj.save()
+                if 'question' in current_block_data:
+                    current_block_data['question'] = highlight_code_blocks(current_block_data['question'])
+                return redirect('courses:course_detail', course_id=course_id)
 
         elif 'go_back' in request.POST:
             if block_index > 0:
                 progress_obj.current_block -= 1
                 progress_obj.save()
+            if 'question' in current_block_data:
+                current_block_data['question'] = highlight_code_blocks(current_block_data['question'])
             return redirect('courses:course_detail', course_id=course_id)
 
         elif 'go_forward' in request.POST:
             if block_index + 1 < total_blocks:
                 progress_obj.current_block += 1
                 progress_obj.save()
+            if 'question' in current_block_data:
+                current_block_data['question'] = highlight_code_blocks(current_block_data['question'])
             return redirect('courses:course_detail', course_id=course_id)
 
     # Теория автоматически считается пройденной
@@ -142,7 +177,10 @@ def course_detail(request, course_id):
     profile = None
     if request.user.is_authenticated:
         profile, _ = UserProfile.objects.get_or_create(user=request.user)
-        
+    if 'question' in current_block_data:
+        current_block_data['question'] = highlight_code_blocks(current_block_data['question'])
+    if 'text' in current_block_data:
+        current_block_data['text'] = highlight_code_blocks(current_block_data['text'])
     return render(request, 'course_detail.html', {
         'course': course,
         'sections': sections,
@@ -150,7 +188,7 @@ def course_detail(request, course_id):
         'current_block_index': block_index,
         'current_content': current_block_data,
         'can_go_back': block_index > 0,
-        'can_go_forward': block_index + 1 < total_blocks,
+        'can_go_forward': block_index + 1 < total_blocks and block_index < progress_obj.completed_blocks,
         'section_locked': section_locked,
         'completed': completed - 1,
         'incorrect': incorrect,

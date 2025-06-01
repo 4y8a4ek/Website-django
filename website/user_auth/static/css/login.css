@@ -13,6 +13,7 @@
   --link-color: #0039c8;
   --button-login: #aeff00;
   --button-log-hov: #669403;
+  --mark-col: #aeff00;
 }
 
 [data-theme="dark"] {
@@ -29,6 +30,7 @@
   --link-color: #3a82ff;
   --button-login: #181818;
   --button-log-hov: #101010;
+  --mark-col: blue;
 }
 
 /* Основные стили для страницы */
@@ -70,7 +72,7 @@ body {
   width: auto;
 }
 
-.navbar .home-btn {
+.home-btn {
   background-color: var(--button-bg);
   border: none;
   padding: 10px 20px;
@@ -81,7 +83,7 @@ body {
   cursor: pointer;
   text-decoration: none;
 }
-.navbar .home-btn:hover {
+.home-btn:hover {
   background-color: var(--button-hover-bg);
 }
 .home-btn{
@@ -168,6 +170,23 @@ button:hover {
 .footer a:hover {
   text-decoration: underline;
 }
+.footer-home {
+  margin-top: 50px;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: var(--footer-text);
+}
+
+.footer-home a {
+  color: #ff6347;
+  text-decoration: none;
+}
+
+.footer-home a:hover {
+  text-decoration: underline;
+}
 
 .navbar .theme-btn {
   background-color: var(--button-bg);
@@ -179,13 +198,12 @@ button:hover {
 }
 
 .main-content {
-    max-width: 800px;
-    padding: 20px;
+    max-width: 100%;
     text-align: center;
 }
 
 .main-content img {
-    max-width: 100%;
+    max-width: 400px;
     border-radius: 10px;
     margin: 20px 0;
 }
@@ -225,12 +243,209 @@ button:hover {
     margin-top: 10px;
     padding: 8px 12px;
     background-color: var(--button-bg);
-    color: var(--text-color);
+    color: white;
     border: none;
     border-radius: 5px;
     text-decoration: none;
 }
-
+.profile-btn{
+  color: white;
+}
 .profile-dropdown .profile-btn:hover {
     background-color: var(--button-hover-bg);
 }
+
+.head-content{
+  padding-top: 70%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* Распределяет блоки по краям */
+  align-items: center; /* Выравнивает по вертикали (по желанию) */
+  background-color: var(--navbar-bg);
+}
+
+.head-content h2{
+  font-size: 40px;
+}
+
+.head-content h2 span{
+  color: var(--mark-col);
+}
+
+.text{
+  text-align: center;
+  display: block;
+  margin-left: 100px;
+  color: white;
+}
+.head-content img{
+  margin-left: 100px;
+  padding-right: 100px;
+  max-width: 500px;
+}
+.head-text h4{
+  font-weight: lighter;
+  font-size: 20px;
+}
+.head-text{
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.foot-cont {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  margin-top: 60px;
+  padding: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.foot-cont > div:first-child {
+  flex: 1;
+  max-width: 50%;
+}
+
+.foot-cont > div:first-child h2 {
+  text-align: center;
+  color: blue;
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.foot-cont > div:first-child img {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.foot-cont > div:last-child {
+  padding-top: 130px;
+  flex: 1;
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.step img {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.step b {
+  display: block;
+  color: blue;
+  font-size: 30px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.step div:last-child {
+  font-size: 14px;
+  color: var(--text-color);
+  text-align: center;
+  width: 100%;
+}
+
+.step span{
+  font-size: 20px;
+}
+
+.group {
+    margin-bottom: 40px;
+    color: var(--button-text);
+}
+
+/* Заголовок группы */
+.group-title {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+/* Список курсов */
+.course-list {
+    padding-left: 27%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Стиль для каждого курса */
+.course {
+    background-color:var(--button-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+}
+
+/* При наведении на курс */
+.course:hover {
+    transform: translateY(-5px);
+    background-color:var(--button-hover-bg);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Фотография курса */
+.course-photo {
+    height: 150px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+/* Изображение курса */
+.course-photo img {
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Название курса */
+.course h4 {
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: white;
+    text-decoration: none;
+}
+
+/* Прогресс курса */
+.course p {
+    font-size: 1em;
+    color: white;
+    text-decoration: none;
+}
+
+.lang-inf {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+  padding: 40px 20px;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 14px;
+  font-size: 25px;
+}
+
+.lang-inf > div {
+  flex: 1;
+  padding: 0 10px;
+  border-left: 1px solid #ccc;
+}
+

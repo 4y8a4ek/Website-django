@@ -1,4 +1,6 @@
 {%load static%}
+{% get_media_prefix as media_url %}
+{% now "U" as timestamp %}
 <a href="{% url 'courses:course_detail' course_id=course.id %}" 
    class="course" 
    onclick="checkAuth(event, {{ user.is_authenticated|yesno:'true,false' }})">
@@ -6,7 +8,7 @@
         {% if course.photo %}
             <img src="{{ media_url }}course_photos/{{ course.photo }}" alt="Фото курса" class="course-img">
         {% else %}
-            <img src="{% static 'course_photos/1.jpg' %}" alt="Фото курса" class="course-img">
+            <img src="{% static 'course_photos/1.JPG' %}" alt="Фото курса" class="course-img">
         {% endif %}
     </div>
     <h4>{{ course.title }}</h4>

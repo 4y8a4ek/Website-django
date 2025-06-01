@@ -255,12 +255,14 @@ body {
     margin-top: 10px;
     padding: 8px 12px;
     background-color: var(--button-bg);
-    color: var(--text-color);
+    color: white;
     border: none;
     border-radius: 5px;
     text-decoration: none;
 }
-
+.profile-btn{
+  color: white;
+}
 .profile-dropdown .profile-btn:hover {
     background-color: var(--button-hover-bg);
 }
@@ -328,7 +330,9 @@ body {
     overflow-y: auto;
     max-height: 65vh;
 }
-
+.course-toc h3{
+    font-size: 30px;
+}
 .course-content {
     background-color: var(--container-bg);
     padding: 20px;
@@ -341,7 +345,8 @@ body {
     display: grid;
     grid-template-columns: 300px 1fr;
     gap: 30px;
-    height: 70vh; /* растягиваем вниз */
+    height: 100%; /* растягиваем вниз */
+    min-height: 70vh;
 }
 
 /* Левая колонка */
@@ -365,6 +370,8 @@ body {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     overflow-y: auto;
     max-height: 100%;
+    font-size: 18px;
+    line-height: 1.7;
 }
 
 /* Внутренний блок контента */
@@ -481,9 +488,8 @@ select {
 .answer-block {
     margin-bottom: 20px;
     padding: 15px;
-    background: var(--navbar-bg);
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    background: var(--container-bg);
+
     transition: background 0.3s ease;
     color: #ffffff; 
     font-size: 18px;
@@ -501,7 +507,8 @@ select {
     border-radius: 6px;
     cursor: pointer;
     background-color: var(--button-bg);
-    border: 1px solid #ccc;
+    border: 3px solid #ffffff;
+    border-radius: 25px;
     transition: 0.2s ease-in-out;
     color: #ffffff;
     font-size: 18px;
@@ -598,3 +605,59 @@ select {
     font-weight: bold;
     unicode-bidi: isolate;
   }
+
+
+  .section-title-link {
+    background: none;
+    border: none;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    padding: 0;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+
+.course-image-wrapper {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.course-image {
+    max-height: 400px;
+    width: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+
+
+pre code {
+    display: block;
+    white-space: pre; /* сохраняет переносы и пробелы */
+    background: var(--container-bg);
+  color: var(--text-color);
+    border-radius: 10px;
+    font-family: Consolas, Monaco, 'Courier New', monospace;
+    font-size: 1em;
+    margin: 0;
+  padding: 0;
+
+}
+pre {
+  display: inline-block;   /* Чтобы ширина была по содержимому */
+  white-space: pre;        /* Сохраняет переносы и пробелы */
+  background: var(--container-bg);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  border-radius: 1em;
+  font-family: Consolas, Monaco, 'Courier New', monospace;
+  font-size: 1em;
+  max-width: 100%;         /* Чтобы не вылезал за контейнер */
+  overflow-x: auto;        /* Горизонтальный скролл, если текст очень длинный */
+  box-sizing: border-box;  /* чтобы паддинги учитывались в ширине */
+}
+

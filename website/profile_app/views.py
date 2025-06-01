@@ -51,6 +51,8 @@ def profile_view(request):
                 request.user.name = new_name
                 request.user.save()
                 name_updated = True
+            print("POST data:", request.POST)
+
 
         # Обработка изменения email
         if 'change_email' in request.POST:

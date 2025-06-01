@@ -1,12 +1,20 @@
 {% load static custom_filters %}
 {% get_media_prefix as media_url %}
+{% now "U" as timestamp %}
+
+
 <!DOCTYPE html>
 <html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>{{ course.title }}</title>
     <link rel="stylesheet" href="{% static 'css/course_detail.css' %}?v={{ timestamp }}">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-okaidia.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+
     <script>
         function toggleTheme() {
             const html = document.documentElement;
@@ -74,13 +82,19 @@
         <div class="course-toc">
             <h3>📚 Оглавление</h3>
             {% for section in sections %}
-                <div class="section-title">
-                    {% if section_locked|index:forloop.counter0 %}
-                        🔒 Секция {{ forloop.counter }}: {{ section.title }}
-                    {% else %}
-                        ✅ Секция {{ forloop.counter }}: {{ section.title }}
-                    {% endif %}
-                </div>
+                <form method="post" style="margin: 0;">
+    {% csrf_token %}
+    {% if not section_locked|index:forloop.counter0 %}
+        <button type="submit" name="jump_to_section" value="{{ forloop.counter0 }}" class="section-title-link">
+            ✅ {{ section.title }}
+        </button>
+    {% else %}
+        <div class="section-title locked">
+            🔒 {{ section.title }}
+        </div>
+    {% endif %}
+</form>
+
             {% endfor %}
         </div>
 
@@ -88,10 +102,16 @@
             <div class="content-inner">
                 {% if current_content.type == 'theory' %}
                     <h3 class = "title">{{ current_content.title }}</h3>
-                    <p>{{ current_content.text|safe }}</p>
+                    {% if current_content.image %}
+                        <div class="course-image-wrapper">
+                            <img src="{{ media_url }}{{ current_content.image }}" alt="Картинка блока" class="course-image">
+                        </div>
+                    {% endif %}
+                    <p>{{ current_content.text|safe }}</p>                   
+
                 {% elif current_content.type == 'test' %}
                     {% if completed >= current_block_index %}
-                        <h3 class = "title">{{ current_content.question }}</h3> 
+                        <h3 class = "title">{{ current_content.question|safe}}</h3> 
                 <div class="correct-answer">
                     <div class="ans-blc">
                         <p class="corr">Правильный ответ:</p>
@@ -104,15 +124,29 @@
                                 <li>{{ current_content.correct }}</li>
                             {% else %}
                                 {% for i in current_content.correct %}
-                                    <li>{{ current_content.options|index:i }}</li>
+                                    <li>{{ current_content.options|index:i|linebreaksbr }}</li>
                                 {% endfor %}
                             {% endif %}
                         </ul>
                     </div>
-                        <img id="sad-rabbit-img" class="sad-rabbit-image" src="" alt="Sad Rabbit" />
+                        <img id="sad-rabbit-img" class="sad-rabbit-image" src="" alt="Happy Rabbit" />
                         <script>
                             const images = [
-                                "{{ media_url }}happy_rabbit/3.png"
+                                "{{ media_url }}happy_rabbit/1.png",
+                                "{{ media_url }}happy_rabbit/2.png",
+                                "{{ media_url }}happy_rabbit/3.png",
+                                "{{ media_url }}happy_rabbit/4.png",
+                                "{{ media_url }}happy_rabbit/5.png",
+                                "{{ media_url }}happy_rabbit/6.png",
+                                "{{ media_url }}happy_rabbit/7.png",
+                                "{{ media_url }}happy_rabbit/8.png",
+                                "{{ media_url }}happy_rabbit/9.png",
+                                "{{ media_url }}happy_rabbit/10.png",
+                                "{{ media_url }}happy_rabbit/11.png",
+                                "{{ media_url }}happy_rabbit/12.png",
+                                "{{ media_url }}happy_rabbit/13.png",
+                                "{{ media_url }}happy_rabbit/14.png"
+
                             ];
                             const randomImage = images[Math.floor(Math.random() * images.length)];
                             const imgElement = document.getElementById("sad-rabbit-img");
@@ -124,32 +158,28 @@
                             }
                         </script>
                     </div>
-                        <form method="post">
-                            {% csrf_token %}
-                            <button type="submit" name="go_forward" class="nav-btn">Далее →</button>
-                        </form>
                     {% else %}
                         <form method="post">
                             {% csrf_token %}
-                            <h3 class = "title">{{ current_content.question }}</h3>
+                            <h3 class = "title">{{ current_content.question|safe}}</h3>
                             <div class="answer-block">
                                 {% if current_content.test_type == 'single_choice' %}
                                     {% for opt in current_content.options %}
                                         <label class="answer-option">
-                                            <input type="radio" name="answer" value="{{ forloop.counter0 }}"> {{ opt }}
+                                            <input type="radio" name="answer" value="{{ forloop.counter0 }}"> {{ opt|linebreaksbr }}
                                         </label>
                                     {% endfor %}
                                 {% elif current_content.test_type == 'multiple_choice' %}
                                     {% for opt in current_content.options %}
                                         <label class="answer-option">
-                                            <input type="checkbox" name="answer" value="{{ forloop.counter0 }}"> {{ opt }}
+                                            <input type="checkbox" name="answer" value="{{ forloop.counter0 }}"> {{ opt|linebreaksbr }}
                                         </label>
                                     {% endfor %}
                                 {% elif current_content.test_type == 'ordering' %}
                                     <p>Введите индексы в правильном порядке (например: 2,0,1)</p>
                                     <ul>
                                         {% for opt in current_content.shuffled_options %}
-                                            <li>{{ forloop.counter0 }}: {{ opt }}</li>
+                                            <li>{{ forloop.counter0 }}: {{ opt|linebreaksbr }}</li>
                                         {% endfor %}
                                     </ul>
                                     <input type="text" name="answer" class="answer-input">
@@ -170,7 +200,7 @@
                                                 <select name="match_{{ forloop.counter0 }}" class="answer-input">
                                                     <option value="">-- Выберите --</option>
                                                     {% for opt in current_content.right %}
-                                                        <option value="{{ opt }}">{{ opt }}</option>
+                                                        <option value="{{ opt|linebreaksbr }}">{{ opt|linebreaksbr }}</option>
                                                     {% endfor %}
                                                 </select>
                                             {% endfor %}
@@ -196,7 +226,10 @@
                     </div>
                     <script>
                         const images = [
-                            "{{ media_url }}sad_rabbit/23.png"
+                            "{{ media_url }}sad_rabbit/1.png",
+                            "{{ media_url }}sad_rabbit/2.png",
+                            "{{ media_url }}sad_rabbit/3.png",
+                            "{{ media_url }}sad_rabbit/4.png"
                         ];
                         const randomImage = images[Math.floor(Math.random() * images.length)];
                         const imgElement = document.getElementById("sad-rabbit-img");
