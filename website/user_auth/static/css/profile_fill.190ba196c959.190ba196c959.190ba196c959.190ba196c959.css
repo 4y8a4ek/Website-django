@@ -1,0 +1,63 @@
+.profile-fill-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 25px 30px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.profile-fill-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.profile-fill-container form p {
+    margin-bottom: 15px;
+}
+
+.profile-fill-container form input,
+.profile-fill-container form select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: border-color 0.3s;
+}
+
+.profile-fill-container form input:focus,
+.profile-fill-container form select:focus {
+    outline: none;
+    border-color: #4a90e2;
+}
+
+.profile-fill-container form button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #4a90e2;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.profile-fill-container form button[type="submit"]:hover {
+    background-color: #357ABD;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 600px) {
+    .profile-fill-container {
+        padding: 20px;
+        margin: 20px;
+    }
+}
+
