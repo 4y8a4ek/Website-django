@@ -1,0 +1,123 @@
+{
+  "title": "Определенные интегралы",
+  "id": "math_opred",
+  "total-blocks": 12,
+  "photo": "math_opred.png",
+  "group": "Математика",
+  "sections": [
+    {
+      "title": "Интеграл Римана",
+      "content": [
+        {
+          "block-id": 1,
+          "type": "theory",
+          "image": "course_photos/math_opred/1.jpg"
+        },
+        {
+          "block-id": 2,
+          "type": "theory",
+          "image": "course_photos/math_opred/2.jpg"
+        },
+        {
+          "block-id": 3,
+          "type": "theory",
+          "image": "course_photos/math_opred/3.jpg"
+        },
+        {
+          "block-id": 4,
+          "type": "test",
+          "question": "Найти площадь фигуры, ограниченной заданными кривыми:   <br> y = 4x^2 , y = (x^2)/9, y =2",
+          "test_type": "single_choice",
+          "options": [
+            "(20√2)/3",
+            "(15√3)/2",
+            "(17√2)/3"
+          ],
+          "correct": [0]
+        },
+        {
+          "block-id": 5,
+          "type": "test",
+          "question": "Найти площадь фигуры, ограниченной заданными кривыми:   <br> y^2 = x^2(a^2+x^2)",
+          "test_type": "single_choice",
+          "options": [
+            "(4/3)/a^2",
+            "(4/3)/a^3",
+            "(3/4)/a",
+            "(3/4)/a^2"
+          ],
+          "correct": [1]
+        },
+        {
+          "block-id": 6,
+          "type": "test",
+          "question": "Найти площадь фигуры, ограниченной заданными кривыми:   <br> p^2 = a^2cos(2f)",
+          "test_type": "single_choice",
+          "options": [
+            "2a^2",
+            "a^3",
+            "2a",
+            "a^2"
+          ],
+          "correct": [3]
+        }
+      ]
+    },
+    {
+      "title": "Верние и нижние суммы Дарбу",
+      "content": [
+        {
+          "block-id": 7,
+          "type": "theory",
+          "image": "course_photos/math_opred/4.jpg"
+        },
+        {
+          "block-id": 8,
+          "type": "theory",
+          "image": "course_photos/math_opred/5.jpg"
+        },
+        {
+          "block-id": 9,
+          "type": "theory",
+          "image": "course_photos/math_opred/6.jpg"
+        },
+        {
+          "block-id": 10,
+          "type": "theory",
+          "image": "course_photos/math_opred/7.jpg"
+        },
+        {
+          "block-id": 10,
+          "type": "theory",
+          "image": "course_photos/math_opred/8.jpg"
+        },
+        {
+          "block-id": 11,
+          "type": "test",
+          "question": "Найти длину дуги кривой y^2 = x^3, отсеченная прямой x = 4/3",
+          "test_type": "single_choice",
+          "options": [
+            "112/25",
+            "121/27",
+            "112/27",
+            "3"
+          ],
+          "correct": [2]
+        },
+        {
+          "block-id": 12,
+          "type": "test",
+          "question": "Найти длину дуг петлей кривой x = √3 t^2, y = t - t^3",
+          "test_type": "single_choice",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": [3]
+        }
+      ]
+    }
+  ]
+}
