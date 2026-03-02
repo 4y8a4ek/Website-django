@@ -35,15 +35,14 @@
 
 /* Основные стили для страницы */
 body {
-  font-family: Arial, sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  flex-direction: column;
+    font-family: Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    margin: 0;
+    padding-top: 60px; /* 60px navbar + 20px запас */
+    display: flex;
+    flex-direction: column;
 }
 
 /* Верхняя панель */
@@ -256,7 +255,6 @@ button:hover {
 }
 
 .head-content{
-  padding-top: 70%;
   width: 100%;
   display: flex;
   justify-content: space-between; /* Распределяет блоки по краям */
@@ -460,14 +458,13 @@ select {
 }
 
 .panel-container {
-  background-color: var(--container-bg);
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  width: 90%;
-  max-width: 1200px;
-  margin: 120px auto 40px; /* margin-top >= высота navbar */
-  margin-top: 10%;
+    background-color: var(--container-bg);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto; /* просто отступ сверху и снизу */
 }
 .filters {
   display: flex;
@@ -550,6 +547,3 @@ form textarea {
 }
 
 
-body {
-    padding-top: 80px; /* столько же, сколько высота navbar + немного */
-}
