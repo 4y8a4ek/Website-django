@@ -467,3 +467,8 @@ html[data-theme='dark'] #loginModal .modal-content button:last-of-type {
 html[data-theme='dark'] #loginModal .modal-content button:last-of-type:hover {
     background-color: #444;
 }
+
+
+body {
+    padding-top: 80px; /* столько же, сколько высота navbar + немного */
+}

@@ -549,3 +549,7 @@ form textarea {
   width: 90%;
 }
 
+
+body {
+    padding-top: 80px; /* столько же, сколько высота navbar + немного */
+}

@@ -365,3 +365,8 @@ form button[type="submit"]:hover {
         margin: 20px;
     }
 }
+
+
+body {
+    padding-top: 80px; /* столько же, сколько высота navbar + немного */
+}
