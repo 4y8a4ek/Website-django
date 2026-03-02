@@ -31,7 +31,8 @@ class StudyGroup(models.TextChoices):
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=255)
-
+    surname = models.CharField(max_length=255)
+    
     role = models.CharField(
         max_length=20,
         choices=UserRole.choices,
@@ -52,6 +53,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name']
 
+    @property
+    def full_name(self):
+        return f"{self.name} {self.surname}"
     def __str__(self):
         return self.email
 

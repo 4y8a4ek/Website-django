@@ -38,33 +38,57 @@ def load_course(course_id):
     
 def register(request):
     if request.method == 'POST':
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        password = request.POST.get('password1')
+        name = request.POST.get('name', '').strip()
+        surname = request.POST.get('surname', '').strip()
+        email = request.POST.get('email', '').strip()
+        password = request.POST.get('password1', '').strip()
         role = request.POST.get('role') or UserRole.STUDENT
         group = request.POST.get('group') or StudyGroup.NONE
 
+        # Проверка заполнения
+        if not name or not surname or not email or not password:
+            return render(request, 'register.html', {
+                'error': 'Заполните все поля',
+                'roles': UserRole.choices,
+                'groups': StudyGroup.choices,
+            })
+
+        # Проверка уникальности email
         if CustomUser.objects.filter(email=email).exists():
-            return render(request, 'register.html', {'error': 'Email уже зарегистрирован'})
+            return render(request, 'register.html', {
+                'error': 'Email уже зарегистрирован',
+                'roles': UserRole.choices,
+                'groups': StudyGroup.choices,
+            })
 
-        if role == 'guest':
-            group = 'none'
+        # Если гость — группа NONE
+        if role == UserRole.GUEST:
+            group = StudyGroup.NONE
 
+        # Создание пользователя
         user = CustomUser.objects.create_user(
             email=email,
             password=password,
             name=name,
+            surname=surname,
             role=role,
             group=group
         )
 
+        # Создаём профиль
         UserProfile.objects.create(user=user)
 
+        # Авторизация
         user = authenticate(request, email=email, password=password)
-        if user:
+
+        if user is not None:
             login(request, user)
             return redirect('user_auth:profile_fill')
 
+        # Если вдруг авторизация не прошла
+        return redirect('user_auth:login')
+
+    # GET-запрос
     return render(request, 'register.html', {
         'roles': UserRole.choices,
         'groups': StudyGroup.choices,
@@ -148,7 +172,11 @@ def progress_panel(request):
     if user.role == UserRole.HEADMAN:
         selected_group = user.group
 
-    users = CustomUser.objects.filter(group=selected_group)
+    # 🔹 фильтрация пользователей
+    if selected_group:
+        users = CustomUser.objects.filter(group=selected_group)
+    else:
+        users = CustomUser.objects.all()  # если группа не выбрана — все
 
     progress = CourseProgress.objects.filter(user__in=users)
 

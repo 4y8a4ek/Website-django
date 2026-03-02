@@ -34,11 +34,11 @@
         }
         
         function openModal() {
-            document.getElementById('loginModal').style.display = 'flex';
+            document.getElementById('loginModal').classList.add('show');
         }
 
         function closeModal() {
-            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('loginModal').classList.remove('show');
             nextUrl = null;
         }
 
@@ -47,6 +47,13 @@
                 event.preventDefault();
                 nextUrl = event.currentTarget.getAttribute('href');
                 openModal(); // вызываем только через функцию
+            }
+        }
+        function redirectToLogin() {
+            if (nextUrl) {
+                window.location.href = "/login/?next=" + encodeURIComponent(nextUrl);
+            } else {
+                window.location.href = "/login/";
             }
         }
     </script>

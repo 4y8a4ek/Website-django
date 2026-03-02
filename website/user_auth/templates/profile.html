@@ -50,7 +50,8 @@
     <div class="profile-container">
         <h2>Профиль</h2>
         <img src="{{ profile.photo.url }}" alt="Фото профиля" width="200" height="200" id="profile-photo">
-        <p><strong>Имя:</strong> {{ profile.user.name }}</p>
+        <p><strong>Имя Фамилия:</strong> {{ profile.user.full_name }}</p>
+        <p><strong>Группа:</strong> {{ profile.user.get_group_display }}</p>
         <p><strong>💡EXP:</strong> {{ profile.exp }}</p>
         <p><strong>⭐Stars:</strong> {{ profile.stars }}</p>
     </div>

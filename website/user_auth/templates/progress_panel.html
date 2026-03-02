@@ -25,6 +25,7 @@
             <p><strong>{{ user.name }}</strong></p>
             <p>⭐ Stars: {{ profile.stars }}</p>
             <p>🔥 EXP: {{ profile.exp }}</p>
+            <a href="{% url 'profile_app:profile' %}" class="profile-btn">Перейти в профиль</a>
         </div>
     </div>
     {% endif %}
@@ -60,7 +61,7 @@
     <div class="table-container">
         <table>
             <tr>
-                <th>Имя</th>
+                <th>Имя Фамилия</th>
                 <th>Email</th>
                 <th>Группа</th>
                 <th>Курс</th>
@@ -68,11 +69,11 @@
             </tr>
             {% for p in progress %}
             <tr>
-                <td>{{ p.user.name }}</td>
+                <td>{{ p.user.full_name }}</td>
                 <td>{{ p.user.email }}</td>
                 <td>{{ p.user.get_group_display }}</td>
                 <td>{{ p.course_id }}</td>
-                <td>{{ p.progress }}%</td>
+                <td>{{ p.progress |floatformat:0 }}%</td>
             </tr>
             {% empty %}
             <tr>

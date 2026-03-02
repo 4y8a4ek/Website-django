@@ -26,6 +26,7 @@
             <p><strong>{{ user.name }}</strong></p>
             <p>⭐ Stars: {{ profile.stars }}</p>
             <p>🔥 EXP: {{ profile.exp }}</p>
+            <a href="{% url 'profile_app:profile' %}" class="profile-btn">Перейти в профиль</a>
         </div>
     </div>
     {% endif %}
@@ -58,7 +59,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>Имя</th>
+                    <th>Имя Фамилия</th>
                     <th>Email</th>
                     <th>Группа</th>
                     <th>Роль</th>
@@ -68,7 +69,7 @@
             <tbody>
             {% for u in users %}
                 <tr>
-                    <td>{{ u.name }}</td>
+                    <td>{{ u.full_name }}</td>
                     <td>{{ u.email }}</td>
                     <td>{{ u.get_group_display }}</td>
                     <td>{{ u.get_role_display }}</td>

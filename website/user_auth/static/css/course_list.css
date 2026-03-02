@@ -281,27 +281,7 @@ h2 {
     text-decoration: none;
 }
 
-/* Модальное окно */
-#loginModal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-}
 
-#loginModal > div {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 400px;
-    margin: 100px auto;
-    text-align: center;
-    position: relative;
-}
 
 /* Футер */
 .footer {
@@ -383,18 +363,21 @@ h2 {
    Модальное окно (фон)
    ============================= */
 #loginModal {
-    display: none ; /* по умолчанию скрыта */
+    display: none; /* скрыта по умолчанию */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* полупрозрачный фон */
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
 
-    display: flex;            /* для центрирования */
-    justify-content: center;  /* по горизонтали */
-    align-items: center;      /* по вертикали */
+/* Когда нужно показать */
+#loginModal.show {
+    display: flex;
 }
 
 /* =============================
