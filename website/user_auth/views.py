@@ -16,6 +16,7 @@ from profile_app.models import UserProfile
 from copy import deepcopy
 import random
 from django.contrib import messages
+from django.views.decorators.cache import never_cache
 COURSES_DIR = os.path.join(settings.BASE_DIR, 'courses', 'data')
 # Страница регистрации
 
@@ -116,6 +117,7 @@ def login_view(request):
 
 
 @profile_required
+@never_cache
 def home(request):
     user = request.user
     profile = None
@@ -213,12 +215,14 @@ def manage_users(request):
         return redirect('user_auth:home')
 
     selected_group = request.GET.get('group')
-
-    users = CustomUser.objects.exclude(role=UserRole.DEAN)
+    selected_role = request.GET.get('role') 
+    users = CustomUser.objects.all()
 
     if selected_group:
         users = users.filter(group=selected_group)
 
+    if selected_role:
+        users = users.filter(role=selected_role)
     if request.method == 'POST':
         user_id = request.POST.get('user_id')
         role = request.POST.get('role')
@@ -236,11 +240,12 @@ def manage_users(request):
         return redirect('user_auth:manage_users')
 
     return render(request, 'manage_users.html', {
-        'users': users,
-        'roles': UserRole.choices,
-        'groups': StudyGroup.choices,
-        'selected_group': selected_group,
-    })
+    'users': users,
+    'roles': UserRole.choices,
+    'groups': StudyGroup.choices,
+    'selected_group': selected_group,
+    'selected_role': selected_role,  # <-- передаем сюда
+})
 
 
 from django.contrib.auth.decorators import login_required

@@ -43,6 +43,8 @@ body {
     padding-top: 60px; /* 60px navbar + 20px запас */
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Верхняя панель */
@@ -255,6 +257,7 @@ button:hover {
 }
 
 .head-content{
+
   width: 100%;
   display: flex;
   justify-content: space-between; /* Распределяет блоки по краям */
@@ -458,13 +461,14 @@ select {
 }
 
 .panel-container {
-    background-color: var(--container-bg);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    width: 90%;
-    max-width: 1200px;
-    margin: 20px auto; /* просто отступ сверху и снизу */
+  background-color: var(--container-bg);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 90%;
+  max-width: 1200px;
+  margin: 120px auto 40px; /* margin-top >= высота navbar */
+  margin-top: 10%;
 }
 .filters {
   display: flex;
