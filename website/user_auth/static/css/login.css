@@ -561,9 +561,12 @@ form input[type="checkbox"] {
 
 
 
-form > div{
+form > ul{
     background-color: var(--input-bg);
     text-align: left;
     padding: 10px;
     border-radius: 10px;
+}
+form > ul > li{
+  marker: none;
 }
