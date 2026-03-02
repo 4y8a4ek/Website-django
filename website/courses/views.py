@@ -49,6 +49,7 @@ def load_course(course_id):
 
 @login_required
 @profile_required
+@never_cache
 def course_detail(request, course_id):
     course = load_course(course_id)
     if not course:

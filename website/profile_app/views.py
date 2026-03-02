@@ -14,6 +14,9 @@ from django.conf import settings
 from courses.models import CourseProgress
 from user_auth.decorators import profile_required
 from profile_app.forms import ProfileForm
+from django.views.decorators.cache import never_cache
+
+
 def load_course_metadata(course_id):
     path = os.path.join(settings.BASE_DIR, 'courses', 'data', f'{course_id}.json')
     try:
@@ -30,6 +33,7 @@ def load_course_metadata(course_id):
         }
 @profile_required
 @login_required
+@never_cache
 def profile_view(request):
     profile, _ = UserProfile.objects.get_or_create(user=request.user)
 
@@ -118,6 +122,7 @@ def profile_view(request):
 
 @login_required
 @profile_required
+@never_cache
 def delete_profile(request):
     if request.method == "POST":
         user = request.user
@@ -137,6 +142,7 @@ def delete_profile(request):
         return HttpResponseForbidden("Неверный запрос")
 
 @login_required
+@never_cache
 def profile_fill(request):
     profile = request.user.userprofile
     if profile.is_complete():
