@@ -568,5 +568,5 @@ form > ul{
     border-radius: 10px;
 }
 form > ul > li{
-  marker: none;
+  list-style: none;
 }
