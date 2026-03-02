@@ -35,14 +35,12 @@
 }
 
 body {
+    margin: 0;
     font-family: Arial, sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
-    min-height: 100vh;
-    margin: 0;
-    padding-top: 80px; /* 60px navbar + 20px запас */
-    display: flex;
-    flex-direction: column;
+    padding-top: 60px;
+    padding-bottom: 80px;
 }
 
 /* Навбар */
@@ -471,3 +469,6 @@ html[data-theme='dark'] #loginModal .modal-content button:last-of-type:hover {
 }
 
 
+body {
+    padding-top: 80px; /* столько же, сколько высота navbar + немного */
+}
