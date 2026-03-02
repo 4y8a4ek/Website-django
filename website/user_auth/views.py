@@ -249,10 +249,10 @@ from django.shortcuts import render, redirect
 from profile_app.forms import ProfileForm
 
 @login_required
+@never_cache
 def profile_fill(request):
     profile = request.user.userprofile
     if profile.is_complete():
-        # если анкета уже заполнена — редирект на главную
         return redirect('user_auth:home')
 
     if request.method == 'POST':

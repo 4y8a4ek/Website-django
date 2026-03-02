@@ -550,4 +550,20 @@ form textarea {
   width: 100%;
 }
 
+/* Стилизация всех чекбоксов в форме */
+form input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--button-bg); /* цвет галочки по теме */
+    cursor: pointer;
+    margin-right: 8px;
+}
 
+
+
+form > div{
+    background-color: var(--input-bg);
+    text-align: left;
+    padding: 10px;
+    border-radius: 10px;
+}
