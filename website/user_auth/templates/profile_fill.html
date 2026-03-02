@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Заполните анкету{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Заполните анкету</h2>
+
+    {% if form.errors %}
+        <div class="error">
+            Пожалуйста, исправьте ошибки в форме.
+        </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Сохранить</button>
+    </form>
+</div>
+{% endblock %}

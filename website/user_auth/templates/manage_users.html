@@ -1,0 +1,133 @@
+{% load static %}
+{% now "U" as timestamp %}
+
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление пользователями</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}?v={{ timestamp }}">
+    
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+    <a href="{% url 'user_auth:home' %}" class="logo-link">
+        <img src="{% static 'images/logo.png' %}" alt="Логотип" class="logo-img">
+    </a>
+    <a href="{% url 'user_auth:home' %}" class="home-btn">Главная</a>
+    {% if user.is_authenticated %}
+    <div class="profile-menu">
+        <a href="#" class="home-btn" onclick="toggleProfileMenu(event)">Профиль</a>
+        <div class="profile-dropdown">
+            <img src="{{ profile.photo.url }}" alt="Аватар">
+            <p><strong>{{ user.name }}</strong></p>
+            <p>⭐ Stars: {{ profile.stars }}</p>
+            <p>🔥 EXP: {{ profile.exp }}</p>
+        </div>
+    </div>
+    {% endif %}
+    <button class="theme-btn" onclick="toggleTheme()">🌓</button>
+</div>
+
+<!-- Контент -->
+<div class="panel-container">
+    <h2>Управление пользователями</h2>
+
+    <!-- Фильтры -->
+    <form method="get" class="filters">
+        <select name="group" onchange="this.form.submit()">
+            <option value="">Все группы</option>
+            {% for value, label in groups %}
+                <option value="{{ value }}" {% if value == selected_group %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="role" onchange="this.form.submit()">
+            <option value="">Все роли</option>
+            {% for value, label in roles %}
+                <option value="{{ value }}" {% if value == selected_role %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <!-- Таблица пользователей -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Имя</th>
+                    <th>Email</th>
+                    <th>Группа</th>
+                    <th>Роль</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for u in users %}
+                <tr>
+                    <td>{{ u.name }}</td>
+                    <td>{{ u.email }}</td>
+                    <td>{{ u.get_group_display }}</td>
+                    <td>{{ u.get_role_display }}</td>
+                    <td>
+                        <form method="post" style="display:flex; gap:5px; flex-wrap:wrap;">
+                            {% csrf_token %}
+                            <input type="hidden" name="user_id" value="{{ u.id }}">
+                            <select name="role">
+                                {% for value, label in roles %}
+                                    <option value="{{ value }}" {% if value == u.role %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                            <select name="group">
+                                {% for value, label in groups %}
+                                    <option value="{{ value }}" {% if value == u.group %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="action-btn">Сохранить</button>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" style="text-align:center">Нет пользователей</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer-home">
+    <p>© 2026 Cr8ate. Все права защищены.</p>
+    <p><a href="#">Политика конфиденциальности</a> | <a href="#">Условия использования</a></p>
+</div>
+
+<script>
+function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+}
+
+function toggleProfileMenu(event) {
+    event.preventDefault();
+    const menu = document.querySelector('.profile-dropdown');
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('theme');
+    if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+    }
+});
+</script>
+
+</body>
+</html>

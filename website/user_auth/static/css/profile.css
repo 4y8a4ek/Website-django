@@ -300,3 +300,68 @@ input[type="name"] {
     margin-top: 20px;
 }
 
+
+
+/* profile.css */
+form {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 25px 30px;
+    background-color: var(--bg-secondary, #f8f9fa);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+form h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: var(--text-primary, #333);
+}
+
+form p {
+    margin-bottom: 15px;
+}
+
+form input, 
+form select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: border-color 0.3s;
+}
+
+form input:focus, 
+form select:focus {
+    outline: none;
+    border-color: #4a90e2;
+}
+
+form button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #4a90e2;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+form button[type="submit"]:hover {
+    background-color: #357ABD;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 600px) {
+    form {
+        padding: 20px;
+        margin: 20px;
+    }
+}

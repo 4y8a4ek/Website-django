@@ -35,6 +35,18 @@
     {% else %}
     <a href="{% url 'user_auth:login' %}" class="home-btn">Войти</a>
     {% endif %}
+    {% if user.is_authenticated and user.role == 'dean' or user.role == 'headman' %}
+    <a href="{% url 'user_auth:progress_panel' %}" class="home-btn">
+        Прогресс
+    </a>
+    {% endif %}
+    {% if user.is_authenticated and user.role == 'dean' %}
+    <a href="{% url 'user_auth:manage_users' %}" class="home-btn">
+        Управление пользователями
+    </a>
+    {% endif %}
+
+
 
     <button class="theme-btn" onclick="toggleTheme()">🌓</button>
 </div>

@@ -33,22 +33,21 @@
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         }
         
-        function checkAuth(event, isAuthenticated) {
-            if (!isAuthenticated) {
-                event.preventDefault();
-                nextUrl = event.currentTarget.getAttribute('href');
-                document.getElementById('loginModal').style.display = 'block';
-            }
-        }
-
-        function redirectToLogin() {
-            const loginUrl = "{% url 'user_auth:login' %}?next=" + encodeURIComponent(nextUrl);
-            window.location.href = loginUrl;
+        function openModal() {
+            document.getElementById('loginModal').style.display = 'flex';
         }
 
         function closeModal() {
             document.getElementById('loginModal').style.display = 'none';
             nextUrl = null;
+        }
+
+        function checkAuth(event, isAuthenticated) {
+            if (!isAuthenticated) {
+                event.preventDefault();
+                nextUrl = event.currentTarget.getAttribute('href');
+                openModal(); // вызываем только через функцию
+            }
         }
     </script>
 </head>
@@ -117,15 +116,13 @@
     </div>
 
     <!-- Модальное окно -->
-    <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; 
-         width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000;">
-        <div style="background-color: white; padding: 20px; border-radius: 10px; 
-             max-width: 400px; margin: 100px auto; text-align: center; position: relative;">
-            <p>Для продолжения необходимо авторизоваться.</p>
-            <button onclick="redirectToLogin()" style="margin-right: 10px;">Войти</button>
-            <button onclick="closeModal()">Отмена</button>
+        <div id="loginModal">
+            <div class="modal-content">
+                <p>Для продолжения необходимо авторизоваться.</p>
+                <button onclick="redirectToLogin()">Войти</button>
+                <button onclick="closeModal()">Отмена</button>
+            </div>
         </div>
-    </div>
 
     <!-- Футер -->
     <footer class="footer">
@@ -133,4 +130,6 @@
         <p><a href="#">Политика конфиденциальности</a> | <a href="#">Условия использования</a></p>
     </footer>
 </body>
+
 </html>
+

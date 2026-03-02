@@ -9,7 +9,8 @@ from profile_app.models import UserProfile
 from copy import deepcopy
 import random
 from django.contrib import messages
-
+from django.views.decorators.cache import never_cache
+from user_auth.decorators import profile_required
 COURSES_DIR = os.path.join(settings.BASE_DIR, 'courses', 'data')
 import re
 
@@ -47,6 +48,7 @@ def load_course(course_id):
         return {}
 
 @login_required
+@profile_required
 def course_detail(request, course_id):
     course = load_course(course_id)
     if not course:
@@ -197,7 +199,8 @@ def course_detail(request, course_id):
     })
 
 
-
+@never_cache
+@profile_required
 def course_list(request):
     files = os.listdir(COURSES_DIR)
     all_courses = []

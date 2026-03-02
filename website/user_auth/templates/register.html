@@ -6,65 +6,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title>Регистрация</title>
     <link rel="stylesheet" href="{% static 'css/login.css' %}?v={{ timestamp }}">
-
 </head>
 <body>
 
-    <!-- Верхняя панель -->
-    <div class="navbar">
-        <a href="/" class="logo-link">
-            <img src="{% static 'images/logo.png' %}" alt="Логотип" class="logo-img">
-        </a>
-        <a href="/" class="home-btn">Главная</a>
-        <button class="theme-btn" onclick="toggleTheme()">🌓</button>
+<!-- Верхняя панель -->
+<div class="navbar">
+    <a href="/" class="logo-link">
+        <img src="{% static 'images/logo.png' %}" alt="Логотип" class="logo-img">
+    </a>
+    <a href="/" class="home-btn">Главная</a>
+    <button class="theme-btn" onclick="toggleTheme()">🌓</button>
+</div>
+
+<!-- Контейнер формы -->
+<div class="container">
+    <h2>Регистрация</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <input type="name" name="name" placeholder="Имя" required>
+
+        <input type="email" name="email" placeholder="Email" required>
+
+        <input type="password" name="password1" placeholder="Пароль" required>
+        <!-- Группа -->
+        <select name="group" id="group-select" required>
+            {% for value, label in groups %}
+                <option value="{{ value }}">{{ label }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <div class="registration-link">
+        <a href="{% url 'user_auth:login' %}">Уже есть аккаунт? Войти</a>
     </div>
+</div>
 
-    <!-- Контейнер формы -->
-    <div class="container">
-        <h2>Регистрация</h2>
-        <form method="post">
-            {% csrf_token %}
-            <input type="name" name="name" placeholder="Имя" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password1" placeholder="Пароль" required>
-            <button type="submit">Зарегистрироваться</button>
-        </form>
+<!-- Футер -->
+<div class="footer">
+    <p>© 2025 Cr8ate. Все права защищены.</p>
+    <p>
+        <a href="#">Политика конфиденциальности</a> |
+        <a href="#">Условия использования</a>
+    </p>
+</div>
 
-        {% if error %}
-            <p class="error">{{ error }}</p>
-        {% endif %}
+<!-- Логика темы -->
+<script>
+    function toggleTheme() {
+        const html = document.documentElement;
+        const current = html.getAttribute('data-theme');
+        const next = current === 'light' ? 'dark' : 'light';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+    }
 
-        <div class="registration-link">
-            <a href="{% url 'user_auth:login' %}">Уже есть аккаунт? Войти</a>
-        </div>
-    </div>
-
-    <!-- Футер -->
-    <div class="footer">
-        <p>© 2025 Cr8ate. Все права защищены.</p>
-        <p><a href="#">Политика конфиденциальности</a> | <a href="#">Условия использования</a></p>
-    </div>
-
-    <!-- Скрипт переключения темы -->
-    <script>
-        function toggleTheme() {
-            const html = document.documentElement;
-            const current = html.getAttribute('data-theme');
-            const next = current === 'light' ? 'dark' : 'light';
-            html.setAttribute('data-theme', next);
-            localStorage.setItem('theme', next);
+    window.addEventListener('DOMContentLoaded', () => {
+        const saved = localStorage.getItem('theme');
+        if (saved) {
+            document.documentElement.setAttribute('data-theme', saved);
         }
+    });
+</script>
 
-        window.addEventListener('DOMContentLoaded', () => {
-            const saved = localStorage.getItem('theme');
-            if (saved) {
-                document.documentElement.setAttribute('data-theme', saved);
-            }
-        });
-    </script>
+<!-- Логика enum -->
+<script>
+    const groupSelect = document.getElementById('group-select');
+
+    function updateGroupState() {
+        if (roleSelect.value === 'guest') {
+            groupSelect.value = 'none';
+            groupSelect.disabled = true;
+        } else {
+            groupSelect.disabled = false;
+        }
+    }
+
+    roleSelect.addEventListener('change', updateGroupState);
+    window.addEventListener('DOMContentLoaded', updateGroupState);
+</script>
 
 </body>
 </html>

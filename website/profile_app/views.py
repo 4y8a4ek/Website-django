@@ -12,7 +12,8 @@ import os
 import json
 from django.conf import settings
 from courses.models import CourseProgress
-
+from user_auth.decorators import profile_required
+from profile_app.forms import ProfileForm
 def load_course_metadata(course_id):
     path = os.path.join(settings.BASE_DIR, 'courses', 'data', f'{course_id}.json')
     try:
@@ -27,7 +28,7 @@ def load_course_metadata(course_id):
             'title': course_id,
             'photo': None
         }
-
+@profile_required
 @login_required
 def profile_view(request):
     profile, _ = UserProfile.objects.get_or_create(user=request.user)
@@ -116,6 +117,7 @@ def profile_view(request):
 
 
 @login_required
+@profile_required
 def delete_profile(request):
     if request.method == "POST":
         user = request.user
@@ -134,3 +136,19 @@ def delete_profile(request):
     else:
         return HttpResponseForbidden("Неверный запрос")
 
+@login_required
+def profile_fill(request):
+    profile = request.user.userprofile
+    if profile.is_complete():
+        # если анкета уже заполнена — редирект на главную
+        return redirect('user_auth:home')
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('user_auth:home')
+    else:
+        form = ProfileForm(instance=profile)
+
+    return render(request, 'profile_fill.html', {'form': form})
