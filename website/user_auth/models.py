@@ -24,9 +24,9 @@ class UserRole(models.TextChoices):
 
 class StudyGroup(models.TextChoices):
     NONE = 'non', 'Не являюсь студентом'
-    CS_101 = 'cs101', 'CS-101'
-    CS_102 = 'cs102', 'CS-102'
-    MATH_201 = 'math201', 'MATH-201'
+    CS_101 = 'pmi51', 'ПМИ-51'
+    CS_102 = 'pmi52', 'ПМИ-52'
+    MATH_201 = 'pmi53', 'ПМИ-53'
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
