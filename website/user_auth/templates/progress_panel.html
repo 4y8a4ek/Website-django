@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_tags %}
 {% now "U" as timestamp %}
 
 <!DOCTYPE html>
@@ -47,8 +48,8 @@
         {% endif %}
         <select name="course">
             <option value="">Все курсы</option>
-            {% for c in courses %}
-                <option value="{{ c }}" {% if c == selected_course %}selected{% endif %}>{{ c }}</option>
+            {% for key, title in course_titles.items %}
+                <option value="{{ key }}" {% if key == selected_course %}selected{% endif %}>{{ title }}</option>
             {% endfor %}
         </select>
         <select name="sort">
@@ -72,7 +73,7 @@
                 <td>{{ p.user.full_name }}</td>
                 <td>{{ p.user.email }}</td>
                 <td>{{ p.user.get_group_display }}</td>
-                <td>{{ p.course_id }}</td>
+                <td>{{ course_titles|get_item:p.course_id|default:p.course_id   }}</td>
                 <td>{{ p.progress |floatformat:0 }}%</td>
             </tr>
             {% empty %}

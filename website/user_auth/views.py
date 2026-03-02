@@ -156,48 +156,43 @@ def logout_view(request):
 
 @login_required
 @profile_required
+@never_cache
 def progress_panel(request):
     user = request.user
 
     if user.role not in [UserRole.DEAN, UserRole.HEADMAN]:
         return redirect('user_auth:home')
 
-    selected_group = None
+    selected_group = request.GET.get('group')
     selected_course = request.GET.get('course')
     sort = request.GET.get('sort', 'user')
 
-    # 👑 деканат
-    if user.role == UserRole.DEAN:
-        selected_group = request.GET.get('group')
-
-    # ⭐ староста
-    if user.role == UserRole.HEADMAN:
-        selected_group = user.group
-
-    # 🔹 фильтрация пользователей
+    # Получаем всех пользователей (с фильтром по группе)
+    users = CustomUser.objects.all()
     if selected_group:
-        users = CustomUser.objects.filter(group=selected_group)
-    else:
-        users = CustomUser.objects.all()  # если группа не выбрана — все
+        users = users.filter(group=selected_group)
 
+    # Получаем прогресс
     progress = CourseProgress.objects.filter(user__in=users)
-
     if selected_course:
         progress = progress.filter(course_id=selected_course)
 
-    # сортировка
     if sort == 'progress':
         progress = progress.order_by('-progress')
     else:
         progress = progress.order_by('user__name')
 
-    # список курсов (уникальные)
-    courses = (
-        CourseProgress.objects
-        .values_list('course_id', flat=True)
-        .distinct()
-    )
+    # 🔹 Загружаем все курсы, чтобы получить title
+    course_files = [f for f in os.listdir(COURSES_DIR) if f.endswith('.json')]
+    course_titles = {}
+    for filename in course_files:
+        path = os.path.join(COURSES_DIR, filename)
+        with open(path, encoding='utf-8') as f:
+            data = json.load(f)
+            course_titles[data["id"]] = data["title"]
 
+    # список курсов для фильтра
+    courses = [(id_, title) for id_, title in course_titles.items()]
     return render(request, 'progress_panel.html', {
         'progress': progress.select_related('user'),
         'groups': StudyGroup.choices if user.role == UserRole.DEAN else None,
@@ -206,6 +201,7 @@ def progress_panel(request):
         'selected_course': selected_course,
         'sort': sort,
         'is_dean': user.role == UserRole.DEAN,
+        'course_titles': course_titles,
     })
 
 
