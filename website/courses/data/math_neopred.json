@@ -1,0 +1,274 @@
+{
+  "title": "Неопределенные интегралы",
+  "id": "math_neopred",
+  "total-blocks": 40,
+  "photo": "math_neopred.png",
+  "group": "Математика",
+  "sections": [
+    {
+      "title": "Первообразная и неопределенный интеграл",
+      "content": [
+        {
+          "block-id": 1,
+          "type": "theory",
+          "image": "course_photos/math_neopred/1.png"
+        },
+        {
+          "block-id": 2,
+          "type": "theory",
+          "image": "course_photos/math_neopred/2.png"
+        },
+        {
+          "block-id": 3,
+          "type": "theory",
+          "image": "course_photos/math_neopred/3.png"
+        },
+        {
+          "block-id": 4,
+          "type": "theory",
+          "image": "course_photos/math_neopred/4.png"
+        },
+        {
+          "block-id": 5, 
+          "title": "Как писать ответы на задания",
+          "type": "theory",
+          "text": "При записи ответов к интегралам текстом важно придерживаться единых правил, чтобы ваша запись была понятна. <br> Используйте следующие правила:<br><br><b>1. Степени</b><br>Используйте символ ^ для обозначения степени.<br> 'code' x^2           # икс в квадрате \n (x+1)^3       # скобка в кубе \n x^(1/2)       # квадратный корень (степень 1/2) 'code' <br><br><b>2. Корни</b><br>Квадратный корень: sqrt(выражение)<br>Корень любой другой степени: (выражение)^(1/n)<br> 'code' sqrt(x+1)           # √(x+1) \n (x)^(1/3)           # кубический корень из x \n sqrt(x^2+1)         # √(x²+1) 'code' <br><br><b>3. Дроби</b><br>Используйте символ /. Если числитель или знаменатель содержит сумму или разность — берите их в скобки!<br> 'code' (1/2)ln|x|           # (½)ln|x| — правильно \n (x+1)/(x-1)         # (x+1)/(x-1) — правильно \n x+1/x-1             # x + 1/x -1 — ошибка! (будет прочитано неверно) 'code' <br><br><b>4. Логарифмы</b><br>Пишите ln или log и в скобках от чего берете. Модуль обозначается вертикальными палками | |.<br> 'code' ln(|x+5|)                # ln|x+5| \n (1/2)ln(|(x-1)/(x+1)|)   # ½ ln(|(x-1)/(x+1)|) 'code' <br><br><b>5. Тригонометрические функции</b><br>Пишите сокращённо: sin, cos, tg, ctg, arcsin, arctg. <br> Аргумент берите в скобки.<br> 'code' sin(2x)              # sin(2x) \n arctg(x/3)           # arctg(x/3) 'code' <br><br><b>6. Константа интегрирования</b><br>В конце неопределённого интеграла обязательно добавляйте пробел и + C.<br> 'code' (x^3)/3 + x + C 'code' <br><br><b>"
+        },
+        {
+          "block-id": 6,
+          "type": "test",
+          "question": "Найдите неопределенный интеграл: <br> 'code' ∫√(ln(x))/x dx 'code' ",
+          "test_type": "text_input",
+          "correct": "(2/3)sqrt(ln(x)^3) + C"
+        },
+        {
+          "block-id": 7,
+          "type": "test",
+          "question": "Найдите неопределенный интеграл: <br> 'code' ∫x/√(x^2+1) dx 'code' ",
+          "test_type": "text_input",
+          "correct": "sqrt(x^2 + 1) + C"
+        },
+        {
+          "block-id": 8,
+          "type": "test",
+          "question": "Найдите неопределенный интеграл: <br> 'code' ∫(e^sin(x))*cos(x) dx 'code' ",
+          "test_type": "text_input",
+          "correct": "e^(sin(x)) + C"
+        }
+      ]
+    },
+    {
+      "title": "Основные методы интегрирования",
+      "content": [
+        {
+          "block-id": 9,
+          "type": "theory",
+          "image": "course_photos/math_neopred/5.png"
+        },
+        {
+          "block-id": 10,
+          "type": "theory",
+          "image": "course_photos/math_neopred/6.png"
+        },
+        {
+          "block-id": 11,
+          "type": "test",
+          "question": "Найдите неопределенный интеграл: <br> 'code' ∫1/√(1+x^2) d(1+x^2) 'code' ",
+          "test_type": "text_input",
+          "correct": "2 * sqrt(1 + x^2) + C"
+        },
+        {
+          "block-id": 12,
+          "type": "test",
+          "question": "Найдите неопределенный интеграл: <br> 'code' ∫x^3/((x^4 + 1)^2)^(1/3) dx'code' ",
+          "test_type": "text_input",
+          "correct": "(3/8)((x^4 + 1)^2)^(1/3) + C"
+        },
+        {
+          "block-id": 13,
+          "type": "test",
+          "question": "Найдите неопределенный интеграл: <br> 'code' ∫(arctg(x))^2/(1 + x^2) dx 'code' ",
+          "test_type": "text_input",
+          "correct": "(arctg(x))^3/3 + C"
+        },
+        {
+          "block-id": 14,
+          "type": "test",
+          "question": "Найдите неопределенный интеграл: <br> 'code' ∫sin(x)/e^(cos(x)) dx 'code' ",
+          "test_type": "text_input",
+          "correct": "e^(- cos(x)) + C"
+        }
+      ]
+    },
+    {
+      "title": "Интегрирование дробно-рациональных функций",
+      "content": [
+        {
+          "block-id": 15,
+          "type": "theory",
+          "image": "course_photos/math_neopred/7.png"
+        },
+        {
+          "block-id": 16,
+          "type": "theory",
+          "image": "course_photos/math_neopred/8.png"
+        },
+        {
+          "block-id": 17,
+          "type": "theory",
+          "image": "course_photos/math_neopred/9.png"
+        },
+        {
+          "block-id": 18,
+          "type": "theory",
+          "image": "course_photos/math_neopred/10.png"
+        },
+        {
+          "block-id": 19,
+          "type": "test",
+          "question": "Найдите неопределенный интеграл: <br> 'code' ∫32x/(2x - 1)(4x^2 - 16x + 15) dx 'code' ",
+          "test_type": "text_input",
+          "correct": "ln|2x - 1|- 6ln|2x - 3| + 5ln|2x - 5| + C"
+        },
+        {
+          "block-id": 20,
+          "type": "test",
+          "question": "Найдите неопределенный интеграл: <br> 'code' ∫(x^2 - 2x + 3) dx 'code' ",
+          "test_type": "text_input",
+          "correct": "1/(x - 1) + ln(sqrt((x - 1)(x - 3)))/|x| + C"
+        }
+      ]
+    },
+    {
+      "title": "Интегрирование тригонометрических функций",
+      "content": [
+        {
+          "block-id": 21,
+          "type": "theory",
+          "image": "course_photos/math_neopred/11.png"
+        },
+        {
+          "block-id": 22,
+          "type": "theory",
+          "image": "course_photos/math_neopred/12.png"
+        },
+        {
+          "block-id": 23,
+          "type": "theory",
+          "image": "course_photos/math_neopred/13.png"
+        },
+        {
+          "block-id": 24,
+          "type": "test",
+          "question": "Найдите неопределенный интеграл: <br> 'code' ∫cos^3 x dx 'code' ",
+          "test_type": "text_input",
+          "correct": "sin(x) - (sin^3 x)/3 + C"
+        },
+        {
+          "block-id": 25,
+          "type": "test",
+          "question": "Найдите неопределенный интеграл: <br> 'code' ∫cos(2x)cos(3x) dx 'code' ",
+          "test_type": "text_input",
+          "correct": "(1/10)sin(5x) + (1/2)sin(x) + C"
+        },
+        {
+          "block-id": 26,
+          "type": "test",
+          "question": "Найдите неопределенный интеграл: <br> 'code' ∫tg^4 x dx 'code' ",
+          "test_type": "text_input",
+          "correct": "(1/3)tg^3 x - tg(x) + x + C"
+        },
+        {
+          "block-id": 27,
+          "type": "test",
+          "question": "Найдите неопределенный интеграл: <br> 'code' ∫xarcsin(x)/ √(1-x^2) dx 'code' ",
+          "test_type": "text_input",
+          "correct": "x - sqrt(1-x^2)arcsin(x) + C"
+        },
+        {
+          "block-id": 28,
+          "type": "test",
+          "question": "Найдите неопределенный интеграл: <br> 'code' ∫1/(5 - 3cos(x)) dx 'code' ",
+          "test_type": "text_input",
+          "correct": "(1/2)arctg(2tg(x/2)) + C"
+        }
+      ]
+    },
+    {
+      "title": "Интегрирование иррациональных функций",
+      "content": [
+        {
+          "block-id": 29,
+          "type": "theory",
+          "image": "course_photos/math_neopred/14.png"
+        },
+        {
+          "block-id": 30,
+          "type": "theory",
+          "image": "course_photos/math_neopred/15.png"
+        },
+        {
+          "block-id": 31,
+          "type": "theory",
+          "image": "course_photos/math_neopred/16.png"
+        },
+        {
+          "block-id": 32,
+          "type": "theory",
+          "image": "course_photos/math_neopred/17.png"
+        },
+        {
+          "block-id": 33,
+          "type": "theory",
+          "image": "course_photos/math_neopred/18.png"
+        },
+        {
+          "block-id": 34,
+          "type": "theory",
+          "image": "course_photos/math_neopred/19.png"
+        },
+        {
+          "block-id": 35,
+          "type": "theory",
+          "image": "course_photos/math_neopred/20.png"
+        },
+        {
+          "block-id": 36,
+          "type": "test",
+          "question": "Найдите неопределенный интеграл: <br> 'code' ∫1/(√x + (√x)^(1/4)) dx 'code' ",
+          "test_type": "text_input",
+          "correct": "2sqrt(x) - 4x^(1/4) + 4ln(1 + (x)^(1/4)) + C"
+        },
+        {
+          "block-id": 37,
+          "type": "test",
+          "question": "Найдите неопределенный интеграл: <br> 'code' ∫cos(2x)cos(3x) dx 'code' ",
+          "test_type": "text_input",
+          "correct": "(1/10)sin(5x) + (1/2)sin(x) + C"
+        },
+        {
+          "block-id": 38,
+          "type": "test",
+          "question": "Найдите неопределенный интеграл: <br> 'code' ∫1/√(1 + e^x) dx 'code' ",
+          "test_type": "text_input",
+          "correct": "ln(sqrt(1 + e^x)-1)/(sqrt(1 + e^x) + 1) + C"
+        },
+        {
+          "block-id": 39,
+          "type": "test",
+          "question": "Найдите неопределенный интеграл: <br> 'code' ∫√((1-x)/(1+x)) dx 'code' ",
+          "test_type": "text_input",
+          "correct": "arcsin(x) + sqrt(1 - x^2) + C"
+        },
+        {
+          "block-id": 40,
+          "type": "test",
+          "question": "Найдите неопределенный интеграл: <br> 'code' ∫ctg(x) dx 'code' ",
+          "test_type": "text_input",
+          "correct": "ln|sin(x)| + C"
+        }
+      ]
+    }
+
+  ]
+}

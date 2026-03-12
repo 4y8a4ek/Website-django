@@ -13,6 +13,7 @@ from django.views.decorators.cache import never_cache
 from user_auth.decorators import profile_required
 COURSES_DIR = os.path.join(settings.BASE_DIR, 'courses', 'data')
 import re
+from django.utils.cache import add_never_cache_headers
 
 
 def highlight_code_blocks(text):
